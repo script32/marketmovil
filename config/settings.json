@@ -19,7 +19,7 @@
     "customCss": "",
     "currencySymbol": "$",
     "paymentGateway": "instore",
-    "databaseConnectionString": "mongodb://market-cosmo:doDk4Snw8AfiPMTI7lTM9s18vmiKOLsAFbizNtwMAYsUrbk9GJb42F2GCGhRD211t4PyhKgGpIYp7bu9GSPXmA%3D%3D@market-cosmo.mongo.cosmos.azure.com:10255/supermercado?ssl=true&appName=@market-cosmo@",
+    "databaseConnectionString": "mongodb://127.0.0.1:27017/supermercado",
     "theme": "Cloth",
     "trackStock": true,
     "orderHook": "",
