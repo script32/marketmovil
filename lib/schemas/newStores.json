@@ -1,0 +1,23 @@
+{
+    "$id": "newStores",
+    "type": "object",
+    "properties": {
+        "storeTitle": {
+            "type": "string",
+            "isNotEmpty": true
+        },
+        "storeAddress": {
+            "type": "string",
+            "isNotEmpty": true
+        },
+        "storeDescription": {
+            "type": "string",
+            "isNotEmpty": true
+        }        
+    },
+    "required": [
+        "storeTitle",
+        "storeAddress",     
+        "storeDescription"
+    ]
+}

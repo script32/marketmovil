@@ -1,0 +1,78 @@
+{{> partials/menu}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="col-sm-12">
+        <h2>Dashboard</h2>
+    </div>
+    <div class="row">
+        <div class="col-6 bottom-pad-30">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Pedidos realizados</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Número total de pedidos realizados</h6>
+                    <h4 class="card-text text-danger">
+                        {{dashboardData.ordersCount}}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 bottom-pad-30">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Valor total del pedido</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Valor total de los pedidos realizados.</h6>
+                    <h4 class="card-text text-danger">
+                        {{currencySymbol config.currencySymbol}}{{formatAmount dashboardData.ordersAmount}}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 bottom-pad-30">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Productos en venta</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Numero de productos en venta</h6>
+                    <h4 class="card-text text-danger">
+                        {{dashboardData.productsCount}}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 bottom-pad-30">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total de productos vendidos</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Cantidad de productos vendidos</h6>
+                    <h4 class="card-text text-danger">
+                        {{dashboardData.productsSold}}
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 bottom-pad-30">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Los mejores productos vendidos</h5>
+                    <ul class="list-unstyled">
+                        {{#if dashboardData.topProducts}}
+                        {{#each dashboardData.topProducts}}
+                        <li class="media my-4 align-middle">
+                            {{#if this.productImage}}
+                            <img src="{{this.productImage}}" class="col-2 mr-3 img-fluid" alt="image {{this._id}}">
+                            {{else}}
+                            <img src="/images/placeholder.png" class="col-2 mr-3 img-fluid" alt="mage {{this._id}}">
+                            {{/if}}
+                            <div class="media-body">
+                                <h5 class="mt-3 mb-1">{{this._id}}</h5>
+                                <h4 class="mt-4">Vendido: <span class="text-danger">{{this.count}}</span></h4>
+                            </div>
+                        </li>
+                        {{/each}}
+                        {{else}}
+                            <h5 class="mt-3 mb-1 text-danger">Nada que ver todavía. Haz algunas ordenes.</h5>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

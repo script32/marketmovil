@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/922f6082-2325-483c-98e0-88093d9f1373/resourceGroups/market/providers/Microsoft.Web/sites/marketmovil",
+    "appService.deploySubpath": "/marketmovil"
+}

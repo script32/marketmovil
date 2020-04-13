@@ -1,0 +1,52 @@
+{
+    "cartTitle": "Ventas",
+    "cartDescription": "MarketMovil",
+    "cartLogo": "logo.png",
+    "baseUrl": "http://localhost",
+    "emailHost": "smtp-mail.outlook.com",
+    "emailPort": 587,
+    "emailSecure": false,
+    "emailUser": "hi@supermercado.com",
+    "emailPassword": "this_is_the_smtp_password",
+    "emailAddress": "hi@supermercado.com",
+    "menuEnabled": true,
+    "productsPerRow": 3,
+    "productsPerPage": 6,
+    "menuTitle": "Menu",
+    "footerHtml": "&lt;h4 class=&quot;text-center&quot;&gt;Powered by MarketMovil&lt;/h4&gt;",
+    "googleAnalytics": "",
+    "injectJs": "",
+    "customCss": "",
+    "currencySymbol": "$",
+    "paymentGateway": "instore",
+    "databaseConnectionString": "mongodb://market-cosmo:doDk4Snw8AfiPMTI7lTM9s18vmiKOLsAFbizNtwMAYsUrbk9GJb42F2GCGhRD211t4PyhKgGpIYp7bu9GSPXmA%3D%3D@market-cosmo.mongo.cosmos.azure.com:10255/supermercado?ssl=true&appName=@market-cosmo@",
+    "theme": "Cloth",
+    "trackStock": true,
+    "orderHook": "",
+    "availableLanguages": [
+        "en",
+        "it",
+        "es"
+    ],
+    "defaultLocale": "es",
+    "maxQuantity": 25,
+    "twitterHandle": "",
+    "facebookAppId": "",
+    "productOrderBy": "date",
+    "productOrder": "descending",
+    "modules": {
+        "enabled": {
+            "shipping": "shipping-basic",
+            "discount": "discount-voucher"
+        },
+        "loaded": {
+            "shipping": {},
+            "discount": {}
+        }
+    },
+    "showRelatedProducts": true,
+    "secretCookie": "877307bc2a213723faf2d678c3bd6a30f6f6a6a0",
+    "secretSession": "98861ec155bd173491287bc22d9a04ab25be5e30",
+    "themeViews": "../views/themes/Cloth/",
+    "env": ".min"
+}

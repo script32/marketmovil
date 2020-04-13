@@ -1,0 +1,21 @@
+{{> partials/menu}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="col-sm-12">
+        <h2>{{ @root.__ "Stores" }} <span class="float-right"><a href="/admin/stores/new" class="btn btn-outline-success">{{ @root.__ "New Store" }}</a></span></h2>
+    </div>
+	<div class="col-md-12">
+		<ul class="list-group">
+			{{#each stores}}
+				<li class="list-group-item">
+					<strong>{{ @root.__ "Stores" }}:</strong> {{this.storeTitle}}
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+</main>
+{{!-- Pager settings --}}
+<input type="hidden" id="itemsPerPage" value="10" >
+<input type="hidden" id="pageNum" value="{{pageNum}}">
+<input type="hidden" id="totalItemCount" value="{{totalItemCount}}">
+<input type="hidden" id="paginateUrl" value="{{paginateUrl}}">
+<input type="hidden" id="searchTerm" value="{{searchTerm}}">

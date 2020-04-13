@@ -1,0 +1,24 @@
+{
+    "name": "supermercado",
+    "description": "A fully functioning Node.js shopping cart with Stripe, PayPal and Authorize.net payments.",
+    "repository": " ",
+    "logo": " ",
+    "keywords": [
+        "Shopping cart",
+        "express",
+        "mongodb",
+        "nodejs",
+        "ecommerce",
+        "paypal",
+        "stripe",
+        "authorize.net",
+        "blockonomics",
+        "adyen",
+        "instore",
+        "lunr",
+        "cart",
+        "shopping",
+        "payway",
+        "westpac"
+      ]
+}
