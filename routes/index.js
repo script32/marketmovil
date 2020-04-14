@@ -825,7 +825,7 @@ router.get('/page/:pageNum', (req, res, next) => {
             }
 
             res.render(`${config.themeViews}index`, {
-                title: 'Shop',
+                title: 'Tienda',
                 results: results.data,
                 session: req.session,
                 message: clearSessionValue(req.session, 'message'),
