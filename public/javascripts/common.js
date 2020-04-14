@@ -79,7 +79,7 @@ $(document).ready(function (){
                             window.location = '/payment/' + response.paymentId;
                         }).fail((response) => {
                             console.log('Response', response);
-                            showNotification('Failed to complete transaction', 'danger', true);
+                            showNotification('Error al completar la transacción', 'danger', true);
                         });
                     }
                 }

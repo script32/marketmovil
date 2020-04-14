@@ -71,7 +71,7 @@ router.get('/admin/products/filter/:search', restrict, async (req, res, next) =>
 // insert form
 router.get('/admin/product/new', restrict, checkAccess, (req, res) => {
     res.render('product-new', {
-        title: 'New product',
+        title: 'Nuevo producto',
         session: req.session,
         productTitle: common.clearSessionValue(req.session, 'productTitle'),
         productDescription: common.clearSessionValue(req.session, 'productDescription'),
@@ -97,7 +97,7 @@ router.post('/admin/product/insert', restrict, checkAccess, async (req, res) => 
         try{
             productOptions = JSON.parse(req.body.productOptions);
         }catch(ex){
-            console.log('Failure to parse options');
+            console.log('No analizar las opciones');
         }
     }
 
@@ -140,13 +140,13 @@ router.post('/admin/product/insert', restrict, checkAccess, async (req, res) => 
         indexProducts(req.app)
         .then(() => {
             res.status(200).json({
-                message: 'New product successfully created',
+                message: 'Nuevo producto creado con éxito',
                 productId: newId
             });
         });
     }catch(ex){
-        console.log(colors.red('Error inserting document: ' + ex));
-        res.status(400).json({ message: 'Error inserting document' });
+        console.log(colors.red('Error al insertar documento: ' + ex));
+        res.status(400).json({ message: 'Error al insertar documento' });
     }
 });
 
@@ -159,10 +159,10 @@ router.get('/admin/product/edit/:id', restrict, checkAccess, async (req, res) =>
     if(!product){
         // If API request, return json
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Product not found' });
+            res.status(400).json({ message: 'Producto no encontrado' });
             return;
         }
-        req.session.message = 'Product not found';
+        req.session.message = 'Producto no encontrado';
         req.session.messageType = 'danger';
         res.redirect('/admin/products');
         return;
@@ -182,7 +182,7 @@ router.get('/admin/product/edit/:id', restrict, checkAccess, async (req, res) =>
     }
 
     res.render('product-edit', {
-        title: 'Edit product',
+        title: 'Editar producto',
         result: product,
         images: images,
         options: options,
@@ -208,17 +208,17 @@ router.post('/admin/product/removeoption', restrict, checkAccess, async (req, re
         try{
             const updateOption = await db.products.findOneAndUpdate({ _id: common.getId(req.body.productId) }, { $set: { productOptions: opts } });
             if(updateOption.ok === 1){
-                res.status(200).json({ message: 'Option successfully removed' });
+                res.status(200).json({ message: 'Opción eliminada con éxito' });
                 return;
             }
-            res.status(400).json({ message: 'Failed to remove option. Please try again.' });
+            res.status(400).json({ message: 'Error al eliminar la opción. Inténtalo de nuevo.' });
             return;
         }catch(ex){
-            res.status(400).json({ message: 'Failed to remove option. Please try again.' });
+            res.status(400).json({ message: 'Error al eliminar la opción. Inténtalo de nuevo.' });
             return;
         }
     }
-    res.status(400).json({ message: 'Product not found. Try saving before removing.' });
+    res.status(400).json({ message: 'Producto no encontrado. Intente guardar antes de eliminar.' });
 });
 
 // Update an existing product form action
@@ -228,7 +228,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
     const product = await db.products.findOne({ _id: common.getId(req.body.productId) });
 
     if(!product){
-        res.status(400).json({ message: 'Failed to update product' });
+        res.status(400).json({ message: 'No se pudo actualizar el producto' });
         return;
     }
     const count = await db.products.countDocuments({ productPermalink: req.body.productPermalink, _id: { $ne: common.getId(product._id) } });
@@ -243,7 +243,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
         try{
             productOptions = JSON.parse(req.body.productOptions);
         }catch(ex){
-            console.log('Failure to parse options');
+            console.log('No analizar las opciones');
         }
     }
 
@@ -292,7 +292,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
             res.status(200).json({ message: 'Successfully saved', product: productDoc });
         });
     }catch(ex){
-        res.status(400).json({ message: 'Failed to save. Please try again' });
+        res.status(400).json({ message: 'Error al guardar. Inténtalo de nuevo' });
     }
 });
 
@@ -307,13 +307,13 @@ router.post('/admin/product/delete', restrict, checkAccess, async (req, res) => 
     rimraf('public/uploads/' + req.body.productId, (err) => {
         if(err){
             console.info(err.stack);
-            res.status(400).json({ message: 'Failed to delete product' });
+            res.status(400).json({ message: 'Error al eliminar producto' });
         }
 
         // re-index products
         indexProducts(req.app)
         .then(() => {
-            res.status(200).json({ message: 'Product successfully deleted' });
+            res.status(200).json({ message: 'Producto eliminado con éxito' });
         });
     });
 });
@@ -324,10 +324,10 @@ router.post('/admin/product/publishedState', restrict, checkAccess, async (req, 
 
     try{
         await db.products.updateOne({ _id: common.getId(req.body.id) }, { $set: { productPublished: common.convertBool(req.body.state) } }, { multi: false });
-        res.status(200).json({ message: 'Published state updated' });
+        res.status(200).json({ message: 'Estado publicado actualizado' });
     }catch(ex){
-        console.error(colors.red('Failed to update the published state: ' + ex));
-        res.status(400).json({ message: 'Published state not updated' });
+        console.error(colors.red('Error al actualizar el estado publicado: ' + ex));
+        res.status(400).json({ message: 'Estado publicado no actualizado' });
     }
 });
 
@@ -338,9 +338,9 @@ router.post('/admin/product/setasmainimage', restrict, checkAccess, async (req, 
     try{
         // update the productImage to the db
         await db.products.updateOne({ _id: common.getId(req.body.product_id) }, { $set: { productImage: req.body.productImage } }, { multi: false });
-        res.status(200).json({ message: 'Main image successfully set' });
+        res.status(200).json({ message: 'Imagen principal configurada correctamente' });
     }catch(ex){
-        res.status(400).json({ message: 'Unable to set as main image. Please try again.' });
+        res.status(400).json({ message: 'No se puede establecer como imagen principal. Inténtalo de nuevo.' });
     }
 });
 
@@ -351,7 +351,7 @@ router.post('/admin/product/deleteimage', restrict, checkAccess, async (req, res
     // get the productImage from the db
     const product = await db.products.findOne({ _id: common.getId(req.body.product_id) });
     if(!product){
-        res.status(400).json({ message: 'Product not found' });
+        res.status(400).json({ message: 'Producto no encontrado' });
         return;
     }
     if(req.body.productImage === product.productImage){
@@ -361,18 +361,18 @@ router.post('/admin/product/deleteimage', restrict, checkAccess, async (req, res
         // remove the image from disk
         fs.unlink(path.join('public', req.body.productImage), (err) => {
             if(err){
-                res.status(400).json({ message: 'Image not removed, please try again.' });
+                res.status(400).json({ message: 'Imagen no eliminada, intente nuevamente.' });
             }else{
-                res.status(200).json({ message: 'Image successfully deleted' });
+                res.status(200).json({ message: 'Imagen eliminada con éxito' });
             }
         });
     }else{
         // remove the image from disk
         fs.unlink(path.join('public', req.body.productImage), (err) => {
             if(err){
-                res.status(400).json({ message: 'Image not removed, please try again.' });
+                res.status(400).json({ message: 'Imagen no eliminada, intente nuevamente.' });
             }else{
-                res.status(200).json({ message: 'Image successfully deleted' });
+                res.status(200).json({ message: 'Imagen eliminada con éxito' });
             }
         });
     }

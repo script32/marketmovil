@@ -50,7 +50,7 @@ router.post('/customer/create', async (req, res) => {
     const customer = await db.customers.findOne({ email: req.body.email });
     if(customer){
         res.status(400).json({
-            message: 'A customer already exists with that email address'
+            message: 'Ya existe un cliente con esa dirección de correo electrónico'
         });
         return;
     }
@@ -82,9 +82,9 @@ router.post('/customer/create', async (req, res) => {
             res.status(200).json(customerReturn);
         });
     }catch(ex){
-        console.error(colors.red('Failed to insert customer: ', ex));
+        console.error(colors.red('No se pudo insertar el cliente: ', ex));
         res.status(400).json({
-            message: 'Customer creation failed.'
+            message: 'La creación del cliente falló.'
         });
     }
 });
@@ -186,7 +186,7 @@ router.post('/customer/update', async (req, res) => {
     const customer = await db.customers.findOne({ _id: getId(req.session.customerId) });
     if(!customer){
         res.status(400).json({
-            message: 'Customer not found'
+            message: 'Cliente no encontrado'
         });
         return;
     }
@@ -213,11 +213,11 @@ router.post('/customer/update', async (req, res) => {
             req.session.customerPhone = customerObj.phone;
             req.session.orderComment = req.body.orderComment;
 
-            res.status(200).json({ message: 'Customer updated', customer: updatedCustomer.value });
+            res.status(200).json({ message: 'Cliente actualizado', customer: updatedCustomer.value });
         });
     }catch(ex){
-        console.error(colors.red('Failed updating customer: ' + ex));
-        res.status(400).json({ message: 'Failed to update customer' });
+        console.error(colors.red('Error al actualizar el cliente: ' + ex));
+        res.status(400).json({ message: 'No se pudo actualizar el cliente' });
     }
 });
 
@@ -252,7 +252,7 @@ router.post('/admin/customer/update', restrict, async (req, res) => {
     const customer = await db.customers.findOne({ _id: getId(req.body.customerId) });
     if(!customer){
         res.status(400).json({
-            message: 'Customer not found'
+            message: 'Cliente no encontrado'
         });
         return;
     }
@@ -268,11 +268,11 @@ router.post('/admin/customer/update', restrict, async (req, res) => {
         .then(() => {
             const returnCustomer = updatedCustomer.value;
             delete returnCustomer.password;
-            res.status(200).json({ message: 'Customer updated', customer: updatedCustomer.value });
+            res.status(200).json({ message: 'Cliente actualizado', customer: updatedCustomer.value });
         });
     }catch(ex){
-        console.error(colors.red('Failed updating customer: ' + ex));
-        res.status(400).json({ message: 'Failed to update customer' });
+        console.error(colors.red('Error al actualizar el cliente: ' + ex));
+        res.status(400).json({ message: 'No se pudo actualizar el cliente' });
     }
 });
 
@@ -284,7 +284,7 @@ router.delete('/admin/customer', restrict, async (req, res) => {
     const customer = await db.customers.findOne({ _id: getId(req.body.customerId) });
     if(!customer){
         res.status(400).json({
-            message: 'Failed to delete customer. Customer not found'
+            message: 'Error al eliminar cliente. Cliente no encontrado'
         });
         return;
     }
@@ -293,11 +293,11 @@ router.delete('/admin/customer', restrict, async (req, res) => {
         await db.customers.deleteOne({ _id: getId(req.body.customerId) });
         indexCustomers(req.app)
         .then(() => {
-            res.status(200).json({ message: 'Customer deleted' });
+            res.status(200).json({ message: 'Cliente eliminado' });
         });
     }catch(ex){
-        console.error(colors.red('Failed deleting customer: ' + ex));
-        res.status(400).json({ message: 'Failed to delete customer' });
+        console.error(colors.red('Error al eliminar cliente: ' + ex));
+        res.status(400).json({ message: 'No se pudo eliminar el cliente' });
     }
 });
 
@@ -310,9 +310,9 @@ router.get('/admin/customer/view/:id?', restrict, async (req, res) => {
     if(!customer){
          // If API request, return json
         if(req.apiAuthenticated){
-            return res.status(400).json({ message: 'Customer not found' });
+            return res.status(400).json({ message: 'Cliente no encontrado' });
         }
-        req.session.message = 'Customer not found';
+        req.session.message = 'Cliente no encontrado';
         req.session.message_type = 'danger';
         return res.redirect('/admin/customers');
     }
@@ -323,7 +323,7 @@ router.get('/admin/customer/view/:id?', restrict, async (req, res) => {
     }
 
     return res.render('customer', {
-        title: 'View customer',
+        title: 'Ver cliente',
         result: customer,
         admin: true,
         session: req.session,
@@ -348,7 +348,7 @@ router.get('/admin/customers', restrict, async (req, res) => {
     }
 
     return res.render('customers', {
-        title: 'Customers - List',
+        title: 'Clientes - Lista',
         admin: true,
         customers: customers,
         session: req.session,
@@ -381,7 +381,7 @@ router.get('/admin/customers/filter/:search', restrict, async (req, res, next) =
     }
 
     return res.render('customers', {
-        title: 'Customer results',
+        title: 'Resultados del cliente',
         customers: customers,
         admin: true,
         config: req.app.config,
@@ -415,12 +415,12 @@ router.post('/admin/customer/lookup', restrict, async (req, res, next) => {
         req.session.customerPhone = customer.phone;
 
         return res.status(200).json({
-            message: 'Customer found',
+            message: 'Cliente encontrado',
             customer
         });
     }
     return res.status(400).json({
-        message: 'No customers found'
+        message: 'No se encontraron clientes'
     });
 });
 
@@ -428,7 +428,7 @@ router.get('/customer/login', async (req, res, next) => {
     const config = req.app.config;
 
     res.render(`${config.themeViews}customer-login`, {
-        title: 'Customer login',
+        title: 'Inicio de sesión del cliente',
         config: req.app.config,
         session: req.session,
         message: clearSessionValue(req.session, 'message'),
@@ -445,7 +445,7 @@ router.post('/customer/login_action', async (req, res) => {
     // check if customer exists with that email
     if(customer === undefined || customer === null){
         res.status(400).json({
-            message: 'A customer with that email does not exist.'
+            message: 'Un cliente con ese correo electrónico no existe.'
         });
         return;
     }
@@ -455,7 +455,7 @@ router.post('/customer/login_action', async (req, res) => {
         if(!result){
             // password is not correct
             res.status(400).json({
-                message: 'Access denied. Check password and try again.'
+                message: 'Acceso denegado. Verifique la contraseña e intente nuevamente.'
             });
             return;
         }
@@ -475,13 +475,13 @@ router.post('/customer/login_action', async (req, res) => {
         req.session.customerPhone = customer.phone;
 
         res.status(200).json({
-            message: 'Successfully logged in',
+            message: 'Logueado exitosamente',
             customer: customer
         });
     })
     .catch((err) => {
         res.status(400).json({
-            message: 'Access denied. Check password and try again.'
+            message: 'Acceso denegado. Verifique la contraseña e intente nuevamente.'
         });
     });
 });
@@ -489,7 +489,7 @@ router.post('/customer/login_action', async (req, res) => {
 // customer forgotten password
 router.get('/customer/forgotten', (req, res) => {
     res.render('forgotten', {
-        title: 'Forgotten',
+        title: 'Olvidado',
         route: 'customer',
         forgotType: 'customer',
         config: req.app.config,
@@ -522,21 +522,21 @@ router.post('/customer/forgotten_action', apiLimiter, async (req, res) => {
         const mailOpts = {
             to: req.body.email,
             subject: 'Forgotten password request',
-            body: `You are receiving this because you (or someone else) have requested the reset of the password for your user account.\n\n
-                Please click on the following link, or paste this into your browser to complete the process:\n\n
+            body: `Está recibiendo esto porque usted (u otra persona) ha solicitado restablecer la contraseña de su cuenta de usuario.\n\n
+                Haga clic en el siguiente enlace o péguelo en su navegador para completar el proceso:\n\n
                 ${config.baseUrl}/customer/reset/${passwordToken}\n\n
-                If you did not request this, please ignore this email and your password will remain unchanged.\n`
+                Si no solicitó esto, ignore este correo electrónico y su contraseña permanecerá sin cambios.\n`
         };
 
         // send the email with token to the user
         // TODO: Should fix this to properly handle result
         sendEmail(mailOpts.to, mailOpts.subject, mailOpts.body);
         res.status(200).json({
-            message: 'If your account exists, a password reset has been sent to your email'
+            message: 'Si su cuenta existe, se ha enviado un restablecimiento de contraseña a su correo electrónico'
         });
     }catch(ex){
         res.status(400).json({
-            message: 'Password reset failed.'
+            message: 'El restablecimiento de contraseña falló.'
         });
     }
 });

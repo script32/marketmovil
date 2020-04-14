@@ -31,7 +31,7 @@ router.get('/payment/:orderId', async (req, res, next) => {
     // Get the order
     const order = await db.orders.findOne({ _id: getId(req.params.orderId) });
     if(!order){
-        res.render('error', { title: 'Not found', message: 'Order not found', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'No encontrado', message: 'Orden no encontrada', helpers: req.handlebars.helpers, config });
         return;
     }
 
@@ -65,7 +65,7 @@ router.get('/payment/:orderId', async (req, res, next) => {
                     }
                 }, { multi: false });
             });
-            console.info('Updated stock levels');
+            console.info('Niveles de stock actualizados');
         }
     }
 
@@ -76,7 +76,7 @@ router.get('/payment/:orderId', async (req, res, next) => {
     let paymentView = `${config.themeViews}payment-complete`;
     if(order.orderPaymentGateway === 'Blockonomics') paymentView = `${config.themeViews}payment-complete-blockonomics`;
     res.render(paymentView, {
-        title: 'Payment complete',
+        title: 'Pago completo',
         config: req.app.config,
         session: req.session,
         result: order,
@@ -97,7 +97,7 @@ router.get('/checkout/information', async (req, res, next) => {
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
-        req.session.message = 'The are no items in your cart. Please add some items before checking out';
+        req.session.message = 'No hay artículos en su carro. Por favor agregue algunos artículos antes de pagar';
         req.session.messageType = 'danger';
         res.redirect('/');
         return;
@@ -129,14 +129,14 @@ router.get('/checkout/shipping', async (req, res, next) => {
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
-        req.session.message = 'The are no items in your cart. Please add some items before checking out';
+        req.session.message = 'No hay artículos en su carro. Por favor agregue algunos artículos antes de pagar';
         req.session.messageType = 'danger';
         res.redirect('/');
         return;
     }
 
     if(!req.session.customerEmail){
-        req.session.message = 'Cannot proceed to shipping without customer information';
+        req.session.message = 'No se puede proceder al envío sin información del cliente.';
         req.session.messageType = 'danger';
         res.redirect('/checkout/information');
         return;
@@ -198,7 +198,7 @@ router.get('/checkout/payment', async (req, res) => {
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
-        req.session.message = 'The are no items in your cart. Please add some items before checking out';
+        req.session.message = 'No hay artículos en su carro. Por favor agregue algunos artículos antes de pagar';
         req.session.messageType = 'danger';
         res.redirect('/');
         return;
@@ -263,7 +263,7 @@ router.post('/checkout/adddiscountcode', async (req, res) => {
     // if there is no items in the cart return a failure
     if(!req.session.cart){
         res.status(400).json({
-            message: 'The are no items in your cart.'
+            message: 'No hay artículos en su carro.'
         });
         return;
     }
@@ -271,7 +271,7 @@ router.post('/checkout/adddiscountcode', async (req, res) => {
     // Check if the discount module is loaded
     if(!config.modules.loaded.discount){
         res.status(400).json({
-            message: 'Access denied.'
+            message: 'Acceso denegado.'
         });
         return;
     }
@@ -279,7 +279,7 @@ router.post('/checkout/adddiscountcode', async (req, res) => {
     // Check defined or null
     if(!req.body.discountCode || req.body.discountCode === ''){
         res.status(400).json({
-            message: 'Discount code is invalid or expired'
+            message: 'El código de descuento no es válido o caducó'
         });
         return;
     }
@@ -288,7 +288,7 @@ router.post('/checkout/adddiscountcode', async (req, res) => {
     const discount = await db.discounts.findOne({ code: req.body.discountCode });
     if(!discount){
         res.status(400).json({
-            message: 'Discount code is invalid or expired'
+            message: 'El código de descuento no es válido o caducó'
         });
         return;
     }
@@ -296,7 +296,7 @@ router.post('/checkout/adddiscountcode', async (req, res) => {
     // Validate date validity
     if(!moment().isBetween(moment(discount.start), moment(discount.end))){
         res.status(400).json({
-            message: 'Discount is expired'
+            message: 'El descuento ha expirado'
         });
         return;
     }
@@ -309,7 +309,7 @@ router.post('/checkout/adddiscountcode', async (req, res) => {
 
     // Return the message
     res.status(200).json({
-        message: 'Discount code applied'
+        message: 'Código de descuento aplicado'
     });
 });
 
@@ -317,7 +317,7 @@ router.post('/checkout/removediscountcode', async (req, res) => {
     // if there is no items in the cart return a failure
     if(!req.session.cart){
         res.status(400).json({
-            message: 'The are no items in your cart.'
+            message: 'No hay artículos en su carrito.'
         });
         return;
     }
@@ -330,7 +330,7 @@ router.post('/checkout/removediscountcode', async (req, res) => {
 
     // Return the message
     res.status(200).json({
-        message: 'Discount code removed'
+        message: 'Código de descuento eliminado'
     });
 });
 
@@ -342,11 +342,11 @@ router.get('/product/:id', async (req, res) => {
 
     const product = await db.products.findOne({ $or: [{ _id: getId(req.params.id) }, { productPermalink: req.params.id }] });
     if(!product){
-        res.render('error', { title: 'Not found', message: 'Order not found', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Not found', message: 'Orden no encontrada', helpers: req.handlebars.helpers, config });
         return;
     }
     if(product.productPublished === false){
-        res.render('error', { title: 'Not found', message: 'Product not found', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Not found', message: 'Producto no encontrado', helpers: req.handlebars.helpers, config });
         return;
     }
     const productOptions = product.productOptions;
@@ -414,13 +414,13 @@ router.post('/product/updatecart', async (req, res, next) => {
 
     // Check cart exists
     if(!req.session.cart){
-        emptyCart(req, res, 'json', 'There are no items if your cart or your cart is expired');
+        emptyCart(req, res, 'json', 'No hay artículos si su carro o su carro ha caducado');
         return;
     }
 
     const product = await db.products.findOne({ _id: getId(cartItem.productId) });
     if(!product){
-        res.status(400).json({ message: 'There was an error updating the cart', totalCartItems: Object.keys(req.session.cart).length });
+        res.status(400).json({ message: 'Se produjo un error al actualizar el carrito.', totalCartItems: Object.keys(req.session.cart).length });
         return;
     }
 
@@ -433,21 +433,21 @@ router.post('/product/updatecart', async (req, res, next) => {
     if(productQuantity === 0){
         // quantity equals zero so we remove the item
         delete req.session.cart[cartItem.cartId];
-        res.status(400).json({ message: 'There was an error updating the cart', totalCartItems: Object.keys(req.session.cart).length });
+        res.status(400).json({ message: 'Se produjo un error al actualizar el carro.', totalCartItems: Object.keys(req.session.cart).length });
         return;
     }
 
     // If stock management on check there is sufficient stock for this product
     if(config.trackStock && product.productStock){
         if(productQuantity > product.productStock){
-            res.status(400).json({ message: 'There is insufficient stock of this product.', totalCartItems: Object.keys(req.session.cart).length });
+            res.status(400).json({ message: 'No hay stock suficiente de este producto.', totalCartItems: Object.keys(req.session.cart).length });
             return;
         }
     }
 
     const productPrice = parseFloat(product.productPrice).toFixed(2);
     if(!req.session.cart[cartItem.cartId]){
-        res.status(400).json({ message: 'There was an error updating the cart', totalCartItems: Object.keys(req.session.cart).length });
+        res.status(400).json({ message: 'Se produjo un error al actualizar el carro', totalCartItems: Object.keys(req.session.cart).length });
         return;
     }
 
@@ -466,7 +466,7 @@ router.post('/product/updatecart', async (req, res, next) => {
         $set: { cart: req.session.cart }
     });
 
-    res.status(200).json({ message: 'Cart successfully updated', totalCartItems: Object.keys(req.session.cart).length });
+    res.status(200).json({ message: 'Carro actualizado con éxito', totalCartItems: Object.keys(req.session.cart).length });
 });
 
 // Remove single product from cart
@@ -475,7 +475,7 @@ router.post('/product/removefromcart', async (req, res, next) => {
 
     // Check for item in cart
     if(!req.session.cart[req.body.cartId]){
-        return res.status(400).json({ message: 'Product not found in cart' });
+        return res.status(400).json({ message: 'Producto no encontrado en el carro' });
     }
 
     // remove item from cart
@@ -496,7 +496,7 @@ router.post('/product/removefromcart', async (req, res, next) => {
     // Update checking cart for subscription
     updateSubscriptionCheck(req, res);
 
-    return res.status(200).json({ message: 'Product successfully removed', totalCartItems: Object.keys(req.session.cart).length });
+    return res.status(200).json({ message: 'Producto eliminado con éxito', totalCartItems: Object.keys(req.session.cart).length });
 });
 
 // Totally empty the cart
@@ -514,7 +514,7 @@ router.post('/product/addtocart', async (req, res, next) => {
     // If maxQuantity set, ensure the quantity doesn't exceed that value
     if(config.maxQuantity && productQuantity > config.maxQuantity){
         return res.status(400).json({
-            message: 'The quantity exceeds the max amount. Please contact us for larger orders.'
+            message: 'La cantidad excede la cantidad máxima. Por favor contáctenos para pedidos más grandes.'
         });
     }
 
@@ -532,18 +532,18 @@ router.post('/product/addtocart', async (req, res, next) => {
     const product = await db.products.findOne({ _id: getId(req.body.productId) });
     // No product found
     if(!product){
-        return res.status(400).json({ message: 'Error updating cart. Please try again.' });
+        return res.status(400).json({ message: 'Error al actualizar el carro. Inténtalo de nuevo.' });
     }
 
     // If cart already has a subscription you cannot add anything else
     if(req.session.cartSubscription){
-        return res.status(400).json({ message: 'Subscription already existing in cart. You cannot add more.' });
+        return res.status(400).json({ message: 'Suscripción ya existente en el carro. No puedes agregar más.' });
     }
 
     // If existing cart isn't empty check if product is a subscription
     if(Object.keys(req.session.cart).length !== 0){
         if(product.productSubscription){
-            return res.status(400).json({ message: 'You cannot combine subscription products with existing in your cart. Empty your cart and try again.' });
+            return res.status(400).json({ message: 'No puede combinar productos de suscripción con los existentes en su carro. Vacíe su carro e intente nuevamente.' });
         }
     }
 
@@ -553,7 +553,7 @@ router.post('/product/addtocart', async (req, res, next) => {
         if(product.productStockDisable !== true){
             // If there is more stock than total (ignoring held)
             if(productQuantity > product.productStock){
-                return res.status(400).json({ message: 'There is insufficient stock of this product.' });
+                return res.status(400).json({ message: 'No hay stock suficiente de este producto.' });
             }
 
             const stockHeld = await db.cart.aggregate(
@@ -583,7 +583,7 @@ router.post('/product/addtocart', async (req, res, next) => {
 
                 // Check there is sufficient stock
                 if(productQuantity > netStock){
-                    return res.status(400).json({ message: 'There is insufficient stock of this product.' });
+                    return res.status(400).json({ message: 'No hay stock suficiente de este producto.' });
                 }
             }
         }
@@ -654,7 +654,7 @@ router.post('/product/addtocart', async (req, res, next) => {
     }
 
     return res.status(200).json({
-        message: 'Cart successfully updated',
+        message: 'Carrito actualizado con éxito',
         cartId: productHash,
         totalCartItems: req.session.totalCartItems
     });
@@ -690,11 +690,11 @@ router.get('/search/:searchTerm/:pageNum?', (req, res) => {
         }
 
         res.render(`${config.themeViews}index`, {
-            title: 'Results',
+            title: 'Resultados',
             results: results.data,
             filtered: true,
             session: req.session,
-            metaDescription: req.app.config.cartTitle + ' - Search term: ' + searchTerm,
+            metaDescription: req.app.config.cartTitle + ' - Término de búsqueda: ' + searchTerm,
             searchTerm: searchTerm,
             message: clearSessionValue(req.session, 'message'),
             messageType: clearSessionValue(req.session, 'messageType'),
@@ -709,7 +709,7 @@ router.get('/search/:searchTerm/:pageNum?', (req, res) => {
         });
     })
     .catch((err) => {
-        console.error(colors.red('Error searching for products', err));
+        console.error(colors.red('Error al buscar productos', err));
     });
 });
 
@@ -765,7 +765,7 @@ router.get('/category/:cat/:pageNum?', (req, res) => {
             });
         })
         .catch((err) => {
-            console.error(colors.red('Error getting products for category', err));
+            console.error(colors.red('Error al obtener productos para la categoría', err));
         });
 });
 
@@ -782,7 +782,7 @@ router.get('/sitemap.xml', (req, res, next) => {
 
     addSitemapProducts(req, res, (err, products) => {
         if(err){
-            console.error(colors.red('Error generating sitemap.xml', err));
+            console.error(colors.red('Error al generar sitemap.xml', err));
         }
         const sitemap = sm.createSitemap(
             {
@@ -830,7 +830,7 @@ router.get('/page/:pageNum', (req, res, next) => {
                 session: req.session,
                 message: clearSessionValue(req.session, 'message'),
                 messageType: clearSessionValue(req.session, 'messageType'),
-                metaDescription: req.app.config.cartTitle + ' - Products page: ' + req.params.pageNum,
+                metaDescription: req.app.config.cartTitle + ' - Página de productos: ' + req.params.pageNum,
                 config: req.app.config,
                 productsPerPage: numberProducts,
                 totalProductCount: results.totalItems,
@@ -842,7 +842,7 @@ router.get('/page/:pageNum', (req, res, next) => {
             });
         })
         .catch((err) => {
-            console.error(colors.red('Error getting products for page', err));
+            console.error(colors.red('Error al obtener productos para la página', err));
         });
 });
 
@@ -866,7 +866,7 @@ router.get('/:page?', async (req, res, next) => {
                 }
 
                 res.render(`${config.themeViews}index`, {
-                    title: `${config.cartTitle} - Shop`,
+                    title: `${config.cartTitle} - Electronica`,
                     theme: config.theme,
                     results: results.data,
                     session: req.session,
@@ -883,7 +883,7 @@ router.get('/:page?', async (req, res, next) => {
                 });
             })
             .catch((err) => {
-                console.error(colors.red('Error getting products for page', err));
+                console.error(colors.red('Error al obtener productos para la página', err));
             });
     }else{
         if(req.params.page === 'admin'){

@@ -1,5 +1,5 @@
 {
-    "orderStatus": "Pending",
-    "buttonText": "Place order, pay instore",
-    "resultMessage": "The order is place. Please pay for your order instore on pickup."
+    "orderStatus": "Pendiente",
+    "buttonText": "Palabras de etiqueta de producto...",
+    "resultMessage": "El Pedido esta gandado. Pague su pedido al recibirlo."
 }

@@ -310,7 +310,7 @@ $(document).ready(function (){
     });
 
     $('.btn-delete-image').on('click', function(){
-        if(confirm('Are you sure you want to delete this image?')){
+        if(confirm('¿Estás seguro de que deseas eliminar esta imagen?')){
             $.ajax({
                 method: 'POST',
                 url: '/admin/product/deleteimage',
@@ -326,7 +326,7 @@ $(document).ready(function (){
     });
 
     $('.btn-delete-product').on('click', function(){
-        if(confirm('Are you sure you want to delete this product?')){
+        if(confirm('¿Estás seguro de que deseas eliminar este producto?')){
             $.ajax({
                 method: 'POST',
                 url: '/admin/product/delete',
@@ -356,7 +356,7 @@ $(document).ready(function (){
                 showNotification(msg.responseJSON.message, 'danger');
             });
         }else{
-            showNotification('Please enter a permalink to validate', 'danger');
+            showNotification('Ingrese un enlace permanente para validar', 'danger');
         }
     });
 
@@ -365,7 +365,7 @@ $(document).ready(function (){
         if($('#product_filter').val() !== ''){
             window.location.href = '/admin/products/filter/' + $('#product_filter').val();
         }else{
-            showNotification('Please enter a keyword to filter', 'danger');
+            showNotification('Por favor, introduzca una palabra clave para filtrar', 'danger');
         }
     });
 
@@ -374,7 +374,7 @@ $(document).ready(function (){
         if($('#order_filter').val() !== ''){
             window.location.href = '/admin/orders/filter/' + $('#order_filter').val();
         }else{
-            showNotification('Please enter a keyword to filter', 'danger');
+            showNotification('Por favor, introduzca una palabra clave para filtrar', 'danger');
         }
     });
 
@@ -383,7 +383,7 @@ $(document).ready(function (){
         if($('#customer_filter').val() !== ''){
             window.location.href = '/admin/customers/filter/' + $('#customer_filter').val();
         }else{
-            showNotification('Please enter a keyword to filter', 'danger');
+            showNotification('Por favor, introduzca una palabra clave para filtrar', 'danger');
         }
     });
 

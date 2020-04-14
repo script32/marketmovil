@@ -72,7 +72,7 @@ router.post('/admin/login_action', async (req, res) => {
 
     const user = await db.users.findOne({ userEmail: common.mongoSanitize(req.body.email) });
     if(!user || user === null){
-        res.status(400).json({ message: 'A user with that email does not exist.' });
+        res.status(400).json({ message: 'Un usuario con ese correo electrónico no existe.' });
         return;
     }
 
@@ -84,11 +84,11 @@ router.post('/admin/login_action', async (req, res) => {
                 req.session.usersName = user.usersName;
                 req.session.userId = user._id.toString();
                 req.session.isAdmin = user.isAdmin;
-                res.status(200).json({ message: 'Login successful' });
+                res.status(200).json({ message: 'Inicio de sesión exitosa' });
                 return;
             }
             // password is not correct
-            res.status(400).json({ message: 'Access denied. Check password and try again.' });
+            res.status(400).json({ message: 'Acceso denegado. Verifique la contraseña e intente nuevamente.' });
         });
 });
 
@@ -133,15 +133,15 @@ router.post('/admin/setup_action', async (req, res) => {
         // email is ok to be used.
         try{
             await db.users.insertOne(doc);
-            res.status(200).json({ message: 'User account inserted' });
+            res.status(200).json({ message: 'Cuenta de usuario insertada' });
             return;
         }catch(ex){
-            console.error(colors.red('Failed to insert user: ' + ex));
-            res.status(200).json({ message: 'Setup failed' });
+            console.error(colors.red('Error al insertar usuario: ' + ex));
+            res.status(200).json({ message: 'Configuración fallida' });
             return;
         }
     }
-    res.status(200).json({ message: 'Already setup.' });
+    res.status(200).json({ message: 'Ya configurado.' });
 });
 
 // dashboard
@@ -230,10 +230,10 @@ router.post('/admin/createApiKey', restrict, checkAccess, async (req, res) => {
     });
 
     if(result.value && result.value.apiKey){
-        res.status(200).json({ message: 'API Key generated', apiKey: result.value.apiKey });
+        res.status(200).json({ message: 'Clave API generada', apiKey: result.value.apiKey });
         return;
     }
-    res.status(400).json({ message: 'Failed to generate API Key' });
+    res.status(400).json({ message: 'Error al generar clave API' });
 });
 
 // settings update
@@ -241,10 +241,10 @@ router.post('/admin/settings/update', restrict, checkAccess, (req, res) => {
     const result = common.updateConfig(req.body);
     if(result === true){
         req.app.config = common.getConfig();
-        res.status(200).json({ message: 'Settings successfully updated' });
+        res.status(200).json({ message: 'Configuración actualizada con éxito' });
         return;
     }
-    res.status(400).json({ message: 'Permission denied' });
+    res.status(400).json({ message: 'Permiso denegado' });
 });
 
 // settings menu
@@ -353,18 +353,18 @@ router.post('/admin/settings/page', restrict, checkAccess, async (req, res) => {
 
         try{
             const updatedPage = await db.pages.findOneAndUpdate({ _id: common.getId(req.body.pageId) }, { $set: doc }, { returnOriginal: false });
-            res.status(200).json({ message: 'Page updated successfully', pageId: req.body.pageId, page: updatedPage.value });
+            res.status(200).json({ message: 'Página actualizada con éxito', pageId: req.body.pageId, page: updatedPage.value });
         }catch(ex){
-            res.status(400).json({ message: 'Error updating page. Please try again.' });
+            res.status(400).json({ message: 'Error al actualizar la página. Inténtalo de nuevo.' });
         }
     }else{
         // insert page
         try{
             const newDoc = await db.pages.insertOne(doc);
-            res.status(200).json({ message: 'New page successfully created', pageId: newDoc.insertedId });
+            res.status(200).json({ message: 'Nueva página creada con éxito', pageId: newDoc.insertedId });
             return;
         }catch(ex){
-            res.status(400).json({ message: 'Error creating page. Please try again.' });
+            res.status(400).json({ message: 'Error al crear la página. Inténtalo de nuevo.' });
         }
     }
 });
@@ -510,13 +510,13 @@ router.post('/admin/settings/discount/update', restrict, checkAccess, async (req
 
     // Check start is after today
     if(moment(discountDoc.start).isBefore(moment())){
-        res.status(400).json({ message: 'Discount start date needs to be after today' });
+        res.status(400).json({ message: 'La fecha de inicio del descuento debe ser posterior a hoy' });
         return;
     }
 
     // Check end is after the start
     if(!moment(discountDoc.end).isAfter(moment(discountDoc.start))){
-        res.status(400).json({ message: 'Discount end date needs to be after start date' });
+        res.status(400).json({ message: 'La fecha de finalización del descuento debe ser posterior a la fecha de inicio' });
         return;
     }
 
@@ -526,7 +526,7 @@ router.post('/admin/settings/discount/update', restrict, checkAccess, async (req
         _id: { $ne: common.getId(discountDoc.discountId) }
     });
     if(checkCode){
-        res.status(400).json({ message: 'Discount code already exists' });
+        res.status(400).json({ message: 'El código de descuento ya existe' });
         return;
     }
 
@@ -537,14 +537,14 @@ router.post('/admin/settings/discount/update', restrict, checkAccess, async (req
         await db.discounts.updateOne({ _id: common.getId(req.body.discountId) }, { $set: discountDoc }, {});
         res.status(200).json({ message: 'Successfully saved', discount: discountDoc });
     }catch(ex){
-        res.status(400).json({ message: 'Failed to save. Please try again' });
+        res.status(400).json({ message: 'Error al guardar. Inténtalo de nuevo' });
     }
 });
 
 // Create a discount code
 router.get('/admin/settings/discount/new', csrfProtection, restrict, checkAccess, async (req, res) => {
     res.render('settings-discount-new', {
-        title: 'Discount code create',
+        title: 'Crear código de descuento',
         session: req.session,
         admin: true,
         message: common.clearSessionValue(req.session, 'message'),
@@ -580,25 +580,25 @@ router.post('/admin/settings/discount/create', csrfProtection, restrict, checkAc
         code: discountDoc.code
     });
     if(checkCode){
-        res.status(400).json({ message: 'Discount code already exists' });
+        res.status(400).json({ message: 'El código de descuento ya existe' });
         return;
     }
 
     // Check start is after today
     if(moment(discountDoc.start).isBefore(moment())){
-        res.status(400).json({ message: 'Discount start date needs to be after today' });
+        res.status(400).json({ message: 'La fecha de inicio del descuento debe ser posterior a hoy' });
         return;
     }
 
     // Check end is after the start
     if(!moment(discountDoc.end).isAfter(moment(discountDoc.start))){
-        res.status(400).json({ message: 'Discount end date needs to be after start date' });
+        res.status(400).json({ message: 'La fecha de finalización del descuento debe ser posterior a la fecha de inicio' });
         return;
     }
 
     // Insert discount code
     const discount = await db.discounts.insertOne(discountDoc);
-    res.status(200).json({ message: 'Discount code created successfully', discountId: discount.insertedId });
+    res.status(200).json({ message: 'Código de descuento creado con éxito', discountId: discount.insertedId });
 });
 
 // Delete discount code
@@ -607,10 +607,10 @@ router.delete('/admin/settings/discount/delete', restrict, checkAccess, async (r
 
     try{
         await db.discounts.deleteOne({ _id: common.getId(req.body.discountId) }, {});
-        res.status(200).json({ message: 'Discount code successfully deleted' });
+        res.status(200).json({ message: 'Código de descuento eliminado correctamente' });
         return;
     }catch(ex){
-        res.status(400).json({ message: 'Error deleting discount code. Please try again.' });
+        res.status(400).json({ message: 'Error al eliminar el código de descuento. Inténtalo de nuevo.' });
     }
 });
 
@@ -631,7 +631,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'File type not allowed or too large. Please try again.' });
+            res.status(400).json({ message: 'Tipo de archivo no permitido o demasiado grande. Inténtalo de nuevo.' });
             return;
         }
 
@@ -642,7 +642,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'File upload error. Please try again.' });
+            res.status(400).json({ message: 'Error al cargar el archivo. Inténtalo de nuevo.' });
             return;
         }
 
@@ -669,19 +669,19 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $set: { productImage: imagePath } }, { multi: false });
         }
         // Return success message
-        res.status(200).json({ message: 'File uploaded successfully' });
+        res.status(200).json({ message: 'documento cargado exitosamente' });
         return;
     }
     // Return error
-    res.status(400).json({ message: 'File upload error. Please try again.' });
+    res.status(400).json({ message: 'Error al cargar el archivo. Inténtalo de nuevo.' });
 });
 
 // delete a file via ajax request
 router.post('/admin/testEmail', restrict, (req, res) => {
     const config = req.app.config;
     // TODO: Should fix this to properly handle result
-    common.sendEmail(config.emailAddress, 'Supermercado test email', 'Your email settings are working');
-    res.status(200).json({ message: 'Test email sent' });
+    common.sendEmail(config.emailAddress, 'Correo electrónico de prueba de Supermercadol', 'La configuración de tu correo electrónico funciona');
+    res.status(200).json({ message: 'Correo electrónico de prueba enviado' });
 });
 
 router.post('/admin/searchall', restrict, async (req, res, next) => {

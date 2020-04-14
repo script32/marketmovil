@@ -87,7 +87,7 @@ router.get('/admin/order/view/:id', restrict, async (req, res) => {
     const order = await db.orders.findOne({ _id: getId(req.params.id) });
 
     res.render('order', {
-        title: 'View order',
+        title: 'Ver pedido',
         result: order,
         config: req.app.config,
         session: req.session,
@@ -102,7 +102,7 @@ router.get('/admin/order/view/:id', restrict, async (req, res) => {
 // render the editor
 router.get('/admin/order/create', restrict, async (req, res) => {
     res.render('order-create', {
-        title: 'Create order',
+        title: 'Crear orden',
         config: req.app.config,
         session: req.session,
         message: clearSessionValue(req.session, 'message'),
@@ -121,14 +121,14 @@ router.post('/admin/order/create', async (req, res, next) => {
     // Check if cart is empty
     if(!req.session.cart){
         res.status(400).json({
-            message: 'The cart is empty. You will need to add items to the cart first.'
+            message: 'El carrito esta vacio. Primero deberá agregar artículos al carrito.'
         });
     }
 
     const orderDoc = {
         orderPaymentId: getId(),
         orderPaymentGateway: 'Instore',
-        orderPaymentMessage: 'Your payment was successfully completed',
+        orderPaymentMessage: 'Su pago se completó con éxito.',
         orderTotal: req.session.totalCartAmount,
         orderShipping: req.session.totalCartShipping,
         orderItemCount: req.session.totalCartItems,
@@ -163,11 +163,11 @@ router.post('/admin/order/create', async (req, res, next) => {
         .then(() => {
             // set the results
             req.session.messageType = 'success';
-            req.session.message = 'Your order was successfully placed. Payment for your order will be completed instore.';
+            req.session.message = 'Su pedido fue realizado con éxito. El pago de su pedido se completará en la tienda.';
             req.session.paymentEmailAddr = newDoc.ops[0].orderEmail;
             req.session.paymentApproved = true;
             req.session.paymentDetails = `<p><strong>Order ID: </strong>${orderId}</p>
-            <p><strong>Transaction ID: </strong>${orderDoc.orderPaymentId}</p>`;
+            <p><strong>Transaccion ID: </strong>${orderDoc.orderPaymentId}</p>`;
 
             // set payment results for email
             const paymentResults = {
@@ -188,16 +188,16 @@ router.post('/admin/order/create', async (req, res, next) => {
 
             // send the email with the response
             // TODO: Should fix this to properly handle result
-            sendEmail(req.session.paymentEmailAddr, `Your order with ${config.cartTitle}`, getEmailTemplate(paymentResults));
+            sendEmail(req.session.paymentEmailAddr, `Su orden con ${config.cartTitle}`, getEmailTemplate(paymentResults));
 
             // redirect to outcome
             res.status(200).json({
-                message: 'Order created successfully',
+                message: 'Pedido creado con éxito',
                 orderId
             });
         });
     }catch(ex){
-        res.status(400).json({ err: 'Your order declined. Please try again' });
+        res.status(400).json({ err: 'Su pedido ha sido rechazado. Inténtalo de nuevo' });
     }
 });
 
@@ -224,7 +224,7 @@ router.get('/admin/orders/filter/:search', restrict, async (req, res, next) => {
     }
 
     res.render('orders', {
-        title: 'Order results',
+        title: 'Resultados de la orden',
         orders: orders,
         admin: true,
         config: req.app.config,
@@ -249,27 +249,27 @@ router.get('/admin/order/delete/:id', restrict, async(req, res) => {
         .then(() => {
             if(req.apiAuthenticated){
                 res.status(200).json({
-                    message: 'Order successfully deleted'
+                    message: 'Pedido eliminado correctamente'
                 });
                 return;
             }
 
             // redirect home
-            req.session.message = 'Order successfully deleted';
+            req.session.message = 'Pedido eliminado correctamente';
             req.session.messageType = 'success';
             res.redirect('/admin/orders');
         });
     }catch(ex){
-        console.log('Cannot delete order', ex);
+        console.log('No se puede eliminar el pedido.', ex);
         if(req.apiAuthenticated){
             res.status(200).json({
-                message: 'Error deleting order'
+                message: 'Error al eliminar orden'
             });
             return;
         }
 
         // redirect home
-        req.session.message = 'Error deleting order';
+        req.session.message = 'Error al eliminar orden';
         req.session.messageType = 'danger';
         res.redirect('/admin/orders');
     }
@@ -283,10 +283,10 @@ router.post('/admin/order/statusupdate', restrict, checkAccess, async (req, res)
             _id: getId(req.body.order_id) },
             { $set: { orderStatus: req.body.status }
         }, { multi: false });
-        return res.status(200).json({ message: 'Status successfully updated' });
+        return res.status(200).json({ message: 'Estado actualizado con éxito' });
     }catch(ex){
-        console.info('Error updating status', ex);
-        return res.status(400).json({ message: 'Failed to update the order status' });
+        console.info('Error al actualizar el estado', ex);
+        return res.status(400).json({ message: 'Error al actualizar el estado del pedido' });
     }
 });
 

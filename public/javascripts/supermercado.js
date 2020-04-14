@@ -466,7 +466,7 @@ $(document).ready(function (){
     $(document).on('click', '#btn_search', function(e){
         e.preventDefault();
         if($('#frm_search').val().trim() === ''){
-            showNotification('Please enter a search value', 'danger');
+            showNotification('Por favor, introduzca un valor de búsqueda', 'danger');
         }else{
             window.location.href = '/search/' + $('#frm_search').val();
         }
@@ -495,8 +495,8 @@ $(document).ready(function (){
         };
         var timeOutMinutes = 10;
         setTimeout(function (){
-            $('#blockonomics_waiting').html('<b>Payment expired</b><br><br><b><a href=\'/checkout/payment\'>Click here</a></b> to try again.<br><br>If you already paid, your order will be processed automatically.');
-            showNotification('Payment expired', 'danger');
+            $('#blockonomics_waiting').html('<b>Pago Expirado</b><br><br><b><a href=\'/checkout/payment\'>Click here</a></b> to try again.<br><br>If you already paid, your order will be processed automatically.');
+            showNotification('Pago Expirado', 'danger');
             blSocket.close();
         }, 1000 * 60 * timeOutMinutes);
 
@@ -519,8 +519,8 @@ $(document).ready(function (){
             if((data.status === 0) || (data.status === 1) || (data.status === 2)){
                 // redirect to order confirmation page
                 var orderMessage = '<br>View <b><a href="/payment/' + orderid + '">Order</a></b>';
-                $('#blockonomics_waiting').html('Payment detected (<b>' + data.value / 1e8 + ' BTC</b>).' + orderMessage);
-                showNotification('Payment detected', 'success');
+                $('#blockonomics_waiting').html('Pago Detectado (<b>' + data.value / 1e8 + ' BTC</b>).' + orderMessage);
+                showNotification('Pago Detectado', 'success');
                 $('#cart-count').html('0');
                 blSocket.close();
                 $.ajax({ method: 'POST', url: '/product/emptycart' }).done(function (){
@@ -541,7 +541,7 @@ function checkMaxQuantity(e, element){
             const qty = element.val();
             e.preventDefault();
             element.val(qty.slice(0, -1));
-            showNotification(`Exceeds maximum quantity: ${$('#maxQuantity').val()}`, 'warning', false);
+            showNotification(`Excede la cantidad máxima: ${$('#maxQuantity').val()}`, 'warning', false);
         }
     }
 }
