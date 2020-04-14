@@ -44,7 +44,7 @@
             <div class="form-group">
             <label class="control-label">{{ @root.__ "Country" }} *</label>
                 <select class="form-control" id="country" name="country" required>
-                    <option value="" disabled selected>Select Country</option>
+                    <option value="" disabled selected>Seleccione Pais</option>
                     {{#each countryList}}
                     <option {{selectState this @root.result.country}} value="{{this}}">{{this}}</option>
                     {{/each}}
@@ -73,7 +73,7 @@
             <div class="form-group">
             <label class="control-label">{{ @root.__ "Password" }}</label>
                 <input type="password" class="form-control" name="password" id="password">
-                <p class="help-block">Only populate if wanting to reset the customers password</p>
+                <p class="help-block">Rellene solo si desea restablecer la contraseña del cliente</p>
             </div>
         </div>
         <div class="col-sm-12">

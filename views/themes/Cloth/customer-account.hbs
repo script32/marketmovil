@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="/customer/account">Orders</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/customer/account">Pedidos</a></li>
         </ol>
     </nav>
     <div class="row">
@@ -37,7 +37,7 @@
                         {{> themes/Cloth/shipping-form}}
                         <div class="row">
                             <div class="col-sm-12">
-                                <a href="/checkout/cart" id="customerSave" class="btn btn-primary float-left">Save details</a>
+                                <a href="/checkout/cart" id="customerSave" class="btn btn-primary float-left">Guardar Detalles</a>
                             </div>
                         </div>
                     </form>
@@ -53,7 +53,7 @@
                             {{#unless orders}}
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    There are no orders for this account. <a class="text-success" href="/">Order here</a>
+                                    There are no orders for this account. <a class="text-success" href="/">Pida Aqui</a>
                                 </div>
                             </div>
                             {{/unless}}
@@ -118,7 +118,7 @@
                                                     {{/if}}
                                                     <div class="float-right">{{currencySymbol @root.config.currencySymbol}}{{formatAmount this.totalItemPrice}}</div>
                                                     {{#if productComment}}
-                                                    <h4><span class="text-danger">Comment:</span> {{this.productComment}}</h4>
+                                                    <h4><span class="text-danger">Comentarios:</span> {{this.productComment}}</h4>
                                                     {{/if}}
                                                 </li>
                                             {{/each}}

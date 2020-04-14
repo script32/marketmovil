@@ -2,9 +2,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/information">Information</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/shipping">Shipping</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout/payment">Payment</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/information">Informacion</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/shipping">Envio</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout/payment">Pago</a></li>
         </ol>
     </nav>
     <div class="row">
@@ -19,7 +19,7 @@
                         <li class="list-group-item">
                             {{@root.session.customerFirstname}} {{@root.session.customerLastname}} - 
                             {{@root.session.customerEmail}}
-                            <span class="float-right"><a href="/checkout/information">Change</a></span>
+                            <span class="float-right"><a href="/checkout/information">Cambiar</a></span>
                         </li>
                     </ul>
                     <ul class="list-group bottom-pad-15">
@@ -31,12 +31,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <span><strong>{{currencySymbol @root.config.currencySymbol}}{{formatAmount @root.session.totalCartShipping}}</strong></span>
-                                    <span class="float-right"><a href="/checkout/shipping">Change</a></span>
+                                    <span class="float-right"><a href="/checkout/shipping">Cambiar</a></span>
                                 </div>
                             </div>
                         </li>
                         {{else}}
-                        <li class="list-group-item">FREE shipping <span class="float-right"><a href="/checkout/shipping">Change</a></span></li>
+                        <li class="list-group-item">FREE shipping <span class="float-right"><a href="/checkout/shipping">Cambio</a></span></li>
                         {{/ifCond}}
                     </ul>
                     {{#if @root.config.modules.loaded.discount}}

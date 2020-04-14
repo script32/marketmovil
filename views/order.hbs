@@ -1,7 +1,7 @@
 {{> partials/menu}}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
     <div class="col-sm-12">
-        <h2>View Order</h2>
+        <h2>Ver Pedido</h2>
     </div>
     <div class="order-layout col-md-12">
         <div class="row">
@@ -76,7 +76,7 @@
                     {{/if}}
                     <div class="float-right">{{currencySymbol @root.config.currencySymbol}}{{formatAmount this.totalItemPrice}}</div>
                     {{#if productComment}}
-                    <h4><span class="text-danger">Comment:</span> {{this.productComment}}</h4>
+                    <h4><span class="text-danger">Comentarios:</span> {{this.productComment}}</h4>
                     {{/if}}
                 </li>
             {{/each}}

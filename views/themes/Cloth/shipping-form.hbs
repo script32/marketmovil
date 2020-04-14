@@ -3,7 +3,7 @@
         <div class="form-group">
             <input type="email" class="form-control customerDetails" id="shipEmail" name="shipEmail" minlength="5" placeholder="Email address" value="{{@root.session.customerEmail}}" required>
             <div class="invalid-feedback">
-                Please enter a valid email address
+                Por favor, introduce una dirección de correo electrónico válida
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="col-sm-12 col-md-12">
         <div class="form-group">
             <select class="form-control" id="shipCountry" name="shipCountry" required>
-                <option value="" disabled selected>Select Country</option>
+                <option value="" disabled selected>Seleccionar país</option>
                 {{#each countryList}}
                 <option {{selectState this @root.session.customerCountry}} value="{{this}}">{{this}}</option>
                 {{/each}}

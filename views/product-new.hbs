@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="page-header">
                 <div class="float-right">
-                    <button id="frm_edit_product_save" class="btn btn-outline-success" type="submit">Add product</button>
+                    <button id="frm_edit_product_save" class="btn btn-outline-success" type="submit">Agregar Producto</button>
                 </div>
                 <h2>{{ @root.__ "New product" }}</h2>
             </div>
@@ -112,9 +112,9 @@
         {{#ifCond config.paymentGateway '==' 'stripe'}}
         <div class="col-12">
             <div class="form-group">
-                <label class="control-label">Subscription plan</label>
+                <label class="control-label">Plan de suscripción</label>
                 <input type="text" class="form-control" id="productSubscription" placeholder="plan_XXXXXXXXXXXXXX">
-                <p class="help-block">First setup the plan in <strong>Stripe</strong> dashboard and enter the Plan ID. Format: plan_XXXXXXXXXXXXXX</p>
+                <p class="help-block">Primero configure el plan en <strong>-</strong> panel de control e ingrese la ID del plan. Formato: plan_XXXXXXXXXXXXXX</p>
             </div>
         </div>
         {{/ifCond}}
@@ -131,7 +131,7 @@
         </div>
         <div class="col-12">
             <div class="form-group">
-                <label for="productTags" class="control-label">Product tag words</label>
+                <label for="productTags" class="control-label">Palabras de etiqueta de producto</label>
                 <input type="text" class="form-control" id="productTags">
                 <p class="help-block">{{ @root.__ "Tag words used to indexed products, making them easier to find and filter." }}</p>
             </div>

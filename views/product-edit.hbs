@@ -123,9 +123,9 @@
             {{#ifCond config.paymentGateway '==' 'stripe'}}
             <div class="col-12">
                 <div class="form-group">
-                    <label class="control-label">Subscription plan</label>
+                    <label class="control-label">Plan de suscripción</label>
                     <input type="text" class="form-control" id="productSubscription" placeholder="plan_XXXXXXXXXXXXXX" value={{@root.result.productSubscription}}>
-                    <p class="help-block">First setup the plan in <strong>Stripe</strong> dashboard and enter the Plan ID. Format: plan_XXXXXXXXXXXXXX</p>
+                    <p class="help-block">Primero configure el plan en <strong>-</strong> panel de control e ingrese la ID del plan. Formato: plan_XXXXXXXXXXXXXX</p>
                 </div>
             </div>
             {{/ifCond}}

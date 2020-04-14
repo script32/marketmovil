@@ -2,13 +2,13 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout/information">Information</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout/information">Informacion</a></li>
             {{#if @root.session.customerPresent}}
-            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/shipping">Shipping</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/payment">Payment</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/shipping">Envio</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/checkout/payment">Pago</a></li>
             {{else}}
-            <li class="breadcrumb-item text-muted" aria-current="page">Shipping</li>
-            <li class="breadcrumb-item text-muted" aria-current="page">Payment</li>
+            <li class="breadcrumb-item text-muted" aria-current="page">Envio</li>
+            <li class="breadcrumb-item text-muted" aria-current="page">Pago</li>
             {{/if}}
         </ol>
     </nav>
@@ -70,14 +70,14 @@
                             <div class="col-sm-6">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="createAccountCheckbox"> Create an account
+                                        <input type="checkbox" id="createAccountCheckbox"> Crear Cuenta
                                     </label>
                                 </div>
                             </div>
                             {{/unless}}
                             <div class="col-sm-12">
-                                <a href="/checkout/cart" class="btn btn-primary float-left">Return to cart</a>
-                                <a href="/checkout/shipping" id="checkoutInformation" class="btn btn-primary float-right">Continue to shipping</a>
+                                <a href="/checkout/cart" class="btn btn-primary float-left">Regresar</a>
+                                <a href="/checkout/shipping" id="checkoutInformation" class="btn btn-primary float-right">Continuar Comprando.</a>
                             </div>
                         </div>
                     </form>
