@@ -2,11 +2,16 @@
     "properties": {
         "cartTitle": {
             "type": "string",
-            "default": "Supermercado"
+            "default": "MarketMovil"
         },
+        "SENDGRID_API_KEY": {
+            "type": "string",
+            "default": "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"
+        }
+        ,
         "cartDescription": {
             "type": "string",
-            "default": "Este es mi Supermercado"
+            "default": "MarketMovil"
         },
         "cartLogo": {
             "type": "string"
@@ -14,7 +19,7 @@
         "baseUrl": {
             "type": "string",
             "format": "uri-template",
-            "default": "http://localhost:1111"
+            "default": "http://localhost:3000"
         },
         "emailHost": {
             "format": "uri-template",

@@ -76,7 +76,7 @@ router.get('/payment/:orderId', async (req, res, next) => {
     let paymentView = `${config.themeViews}payment-complete`;
     if(order.orderPaymentGateway === 'Blockonomics') paymentView = `${config.themeViews}payment-complete-blockonomics`;
     res.render(paymentView, {
-        title: 'Pago completo',
+        title: 'Pago completado',
         config: req.app.config,
         session: req.session,
         result: order,
@@ -110,7 +110,7 @@ router.get('/checkout/information', async (req, res, next) => {
 
     // render the payment page
     res.render(`${config.themeViews}checkout-information`, {
-        title: 'Checkout - Information',
+        title: 'Checkout - Informacion',
         config: req.app.config,
         session: req.session,
         paymentType,

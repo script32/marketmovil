@@ -2,7 +2,7 @@
     "name": "supermercado",
     "description": "A fully functioning Node.js shopping cart with Stripe, PayPal and Authorize.net payments.",
     "repository": " ",
-    "logo": " ",
+    "logo": "logo.png",
     "keywords": [
         "Shopping cart",
         "express",

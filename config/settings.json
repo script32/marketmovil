@@ -1,19 +1,20 @@
 {
-    "cartTitle": "Ventas",
+    "cartTitle": "MarketMovil",
+    "SENDGRID_API_KEY": "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",
     "cartDescription": "MarketMovil",
     "cartLogo": "logo.png",
     "baseUrl": "http://localhost",
     "emailHost": "smtp-mail.outlook.com",
     "emailPort": 587,
     "emailSecure": false,
-    "emailUser": "hi@supermercado.com",
+    "emailUser": "info@marketmovil.cl",
     "emailPassword": "this_is_the_smtp_password",
     "emailAddress": "hi@supermercado.com",
     "menuEnabled": true,
     "productsPerRow": 3,
     "productsPerPage": 6,
     "menuTitle": "Menu",
-    "footerHtml": "&lt;h4 class=&quot;text-center&quot;&gt;Powered by MarketMovil&lt;/h4&gt;",
+    "footerHtml": "&lt;h2 class=&quot;text-center&quot;&gt;Powered by MarketMovil&lt;/h2&gt;",
     "googleAnalytics": "",
     "injectJs": "",
     "customCss": "",
@@ -48,5 +49,5 @@
     "secretCookie": "877307bc2a213723faf2d678c3bd6a30f6f6a6a0",
     "secretSession": "98861ec155bd173491287bc22d9a04ab25be5e30",
     "themeViews": "../views/themes/Cloth/",
-    "env": ".min"
+    "env": ""
 }

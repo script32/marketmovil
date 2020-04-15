@@ -1,5 +1,5 @@
 {
     "orderStatus": "Pendiente",
-    "buttonText": "Palabras de etiqueta de producto...",
-    "resultMessage": "El Pedido esta gandado. Pague su pedido al recibirlo."
+    "buttonText": "Procesar Pago",
+    "resultMessage": "Pague su pedido al recibirlo."
 }

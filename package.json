@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@adyen/api-library": "^2.1.7",
+    "@sendgrid/mail": "^7.0.0",
     "ajv": "^6.10.2",
     "ajv-errors": "^1.0.1",
     "async": "^2.6.3",

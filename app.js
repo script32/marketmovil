@@ -245,21 +245,21 @@ handlebars = handlebars.create({
             return options.inverse(this);
         },
         paymentMessage: (status) => {
-            if(status === 'Paid'){
-                return '<h2 class="text-success">Your payment has been successfully processed</h2>';
+            if(status === 'Pagado'){
+                return '<h2 class="text-success">Su pago ha sido procesado exitosamente</h2>';
             }
-            if(status === 'Pending'){
+            if(status === 'Pendiente'){
                 const paymentConfig = common.getPaymentConfig();
                 if(config.paymentGateway === 'instore'){
                     return `<h2 class="text-warning">${paymentConfig.resultMessage}</h2>`;
                 }
-                return '<h2 class="text-warning">The payment for this order is pending. We will be in contact shortly.</h2>';
+                return '<h2 class="text-warning">El pago de este pedido está pendiente. Estaremos en contacto en breve.</h2>';
             }
-            return '<h2 class="text-danger">Your payment has failed. Please try again or contact us.</h2>';
+            return '<h2 class="text-danger">Su pago ha fallado. Por favor intente nuevamente o contáctenos.</h2>';
         },
         paymentOutcome: (status) => {
-            if(status === 'Paid' || status === 'Pending'){
-                return '<h5 class="text-warning">Please retain the details above as a reference of payment</h5>';
+            if(status === 'Pagado' || status === 'Pendiente'){
+                return '<h5 class="text-warning">Conserve los detalles anteriores como referencia de pago</h5>';
             }
             return '';
         },
