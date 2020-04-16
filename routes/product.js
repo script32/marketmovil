@@ -246,7 +246,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
             console.log('No analizar las opciones');
         }
     }
-
+    
     const productDoc = {
         productId: req.body.productId,
         productPermalink: req.body.productPermalink,
@@ -256,7 +256,6 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
         productPublished: common.convertBool(req.body.productPublished),
         productTags: req.body.productTags,
         productOptions: productOptions || null,
-        productComment: common.checkboxBool(req.body.productComment),
         productStock: common.safeParseInt(req.body.productStock) || null,
         productStockDisable: common.convertBool(req.body.productStockDisable),
         testin: 'test'
@@ -284,7 +283,17 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
         productDoc.productImage = product.productImage;
     }
 
+    console.log(req.body.productComment);
+
     try{
+        await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $set: {"productComment": req.body.productComment}}, {});
+        // Update the index
+        indexProducts(req.app)
+        .then(() => {
+            
+        });
+
+
         await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $set: productDoc }, {});
         // Update the index
         indexProducts(req.app)
