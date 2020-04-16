@@ -53,7 +53,7 @@
                             {{#unless orders}}
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    There are no orders for this account. <a class="text-success" href="/">Pida Aqui</a>
+                                    No hay pedidos para esta cuenta. <a class="text-success" href="/">Pida Aqui</a>
                                 </div>
                             </div>
                             {{/unless}}
@@ -72,7 +72,7 @@
                                     <div class="card-body">
                                         <ul class="list-group">
                                             <li class="list-group-item list-group-input-pad">
-                                                <strong> Order status: </strong><span class="text-{{getStatusColor this.orderStatus}} float-right">{{this.orderStatus}}</span>
+                                                <strong> Estado del Pedido: </strong><span class="text-{{getStatusColor this.orderStatus}} float-right">{{this.orderStatus}}</span>
                                             </li>
                                             <li class="list-group-item"><strong> {{ @root.__ "Order date" }}: </strong><span class="float-right">{{formatDate result.orderDate "DD/MM/YYYY hh:mmA"}}</span></li>
                                             <li class="list-group-item"><strong> {{ @root.__ "Order ID" }}: </strong><span class="float-right">{{this._id}}</span></li>
