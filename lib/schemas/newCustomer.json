@@ -29,6 +29,10 @@
             "type": "string",
             "isNotEmpty": true
         },
+        "city":{
+            "type":"string",
+            "isNotEmpty":true
+        },
         "postcode": {
             "type": "string",
             "isNotEmpty": true

@@ -22,6 +22,7 @@ const {
     getCountryList
 } = require('../lib/common');
 const countryList = getCountryList();
+const cityList = {};
 
 // These is the customer facing routes
 router.get('/payment/:orderId', async (req, res, next) => {
@@ -117,6 +118,7 @@ router.get('/checkout/information', async (req, res, next) => {
         cartClose: false,
         page: 'checkout-information',
         countryList,
+        cityList,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
@@ -161,6 +163,7 @@ router.get('/checkout/shipping', async (req, res, next) => {
         cartReadOnly: true,
         page: 'checkout-shipping',
         countryList,
+        cityList,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
@@ -223,6 +226,7 @@ router.get('/checkout/payment', async (req, res) => {
         cartReadOnly: true,
         page: 'checkout-information',
         countryList,
+        cityList,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
@@ -249,6 +253,7 @@ router.get('/blockonomics_payment', (req, res, next) => {
         cartReadOnly: true,
         page: 'checkout-information',
         countryList,
+        cityList,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,

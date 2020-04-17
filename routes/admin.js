@@ -84,6 +84,7 @@ router.post('/admin/login_action', async (req, res) => {
                 req.session.usersName = user.usersName;
                 req.session.userId = user._id.toString();
                 req.session.isAdmin = user.isAdmin;
+                req.session.userStore = user.userStore;
                 res.status(200).json({ message: 'Inicio de sesión exitosa' });
                 return;
             }

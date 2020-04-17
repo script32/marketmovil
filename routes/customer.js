@@ -32,8 +32,9 @@ router.post('/customer/create', async (req, res) => {
         lastName: req.body.lastName,
         address1: req.body.address1,
         address2: req.body.address2,
-        country: req.body.country,
+        country: req.body.country,        
         state: req.body.state,
+        city: req.body.city,
         postcode: req.body.postcode,
         phone: req.body.phone,
         password: bcrypt.hashSync(req.body.password, 10),
@@ -74,6 +75,7 @@ router.post('/customer/create', async (req, res) => {
             req.session.customerAddress2 = customerReturn.address2;
             req.session.customerCountry = customerReturn.country;
             req.session.customerState = customerReturn.state;
+            req.session.customerCity = customerReturn.city;
             req.session.customerPostcode = customerReturn.postcode;
             req.session.customerPhone = customerReturn.phone;
             req.session.orderComment = req.body.orderComment;
@@ -99,6 +101,7 @@ router.post('/customer/save', async (req, res) => {
         address2: req.body.address2,
         country: req.body.country,
         state: req.body.state,
+        city: req.body.city,
         postcode: req.body.postcode,
         phone: req.body.phone
     };
@@ -119,6 +122,7 @@ router.post('/customer/save', async (req, res) => {
     req.session.customerAddress2 = customerObj.address2;
     req.session.customerCountry = customerObj.country;
     req.session.customerState = customerObj.state;
+    req.session.customerCity = customerObj.city;
     req.session.customerPostcode = customerObj.postcode;
     req.session.customerPhone = customerObj.phone;
     req.session.orderComment = req.body.orderComment;
@@ -148,6 +152,7 @@ router.get('/customer/account', async (req, res) => {
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         countryList: getCountryList(),
+        cityList: {},
         config: req.app.config,
         helpers: req.handlebars.helpers
     });
@@ -171,6 +176,7 @@ router.post('/customer/update', async (req, res) => {
         address2: req.body.address2,
         country: req.body.country,
         state: req.body.state,
+        city: req.body.city,
         postcode: req.body.postcode,
         phone: req.body.phone
     };
@@ -209,6 +215,7 @@ router.post('/customer/update', async (req, res) => {
             req.session.customerAddress2 = customerObj.address2;
             req.session.customerCountry = customerObj.country;
             req.session.customerState = customerObj.state;
+            req.session.customerCity = customerObj.city;
             req.session.customerPostcode = customerObj.postcode;
             req.session.customerPhone = customerObj.phone;
             req.session.orderComment = req.body.orderComment;
@@ -234,6 +241,7 @@ router.post('/admin/customer/update', restrict, async (req, res) => {
         address2: req.body.address2,
         country: req.body.country,
         state: req.body.state,
+        city: req.body.city,
         postcode: req.body.postcode,
         phone: req.body.phone
     };
@@ -330,6 +338,7 @@ router.get('/admin/customer/view/:id?', restrict, async (req, res) => {
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         countryList: getCountryList(),
+        cityList: {},
         config: req.app.config,
         editor: true,
         helpers: req.handlebars.helpers
@@ -411,6 +420,7 @@ router.post('/admin/customer/lookup', restrict, async (req, res, next) => {
         req.session.customerAddress2 = customer.address2;
         req.session.customerCountry = customer.country;
         req.session.customerState = customer.state;
+        req.session.customerCity = customer.city;
         req.session.customerPostcode = customer.postcode;
         req.session.customerPhone = customer.phone;
 

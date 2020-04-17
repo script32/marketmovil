@@ -217,5 +217,7 @@
 	"User Address": "Direccion de Tienda",
 	"User Description": "Descripción de usuario",
 	"Store Address": "Direccion de Tienda",
-	"Store Description": "Descripcion de Tienda"
+	"Store Description": "Descripcion de Tienda",
+	"City": "City",
+	"Store": "Store"
 }

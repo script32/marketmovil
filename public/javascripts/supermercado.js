@@ -169,6 +169,7 @@ $(document).ready(function (){
                     address2: $('#shipAddr2').val(),
                     country: $('#shipCountry').val(),
                     state: $('#shipState').val(),
+                    city: $('#shipCity').val(),
                     postcode: $('#shipPostcode').val(),
                     phone: $('#shipPhoneNumber').val(),
                     password: $('#newCustomerPassword').val(),
@@ -280,6 +281,7 @@ $(document).ready(function (){
                 $('#shipAddr2').val(customer.address2);
                 $('#shipCountry').val(customer.country);
                 $('#shipState').val(customer.state);
+                $('#shipCity').val(customer.city);
                 $('#shipPostcode').val(customer.postcode);
                 $('#shipPhoneNumber').val(customer.phone);
                 location.reload();
@@ -307,6 +309,7 @@ $(document).ready(function (){
                     address2: $('#shipAddr2').val(),
                     country: $('#shipCountry').val(),
                     state: $('#shipState').val(),
+                    city: $('#shipCity').val(),
                     postcode: $('#shipPostcode').val(),
                     phone: $('#shipPhoneNumber').val(),
                     password: $('#newCustomerPassword').val(),

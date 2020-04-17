@@ -108,6 +108,7 @@ router.get('/admin/order/create', restrict, async (req, res) => {
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         countryList: getCountryList(),
+        cityList: {},
         editor: true,
         admin: true,
         helpers: req.handlebars.helpers

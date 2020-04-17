@@ -5,6 +5,9 @@ const colors = require('colors');
 const bcrypt = require('bcryptjs');
 const { validateJson } = require('../lib/schema');
 const router = express.Router();
+const {
+    getId
+} = require('../lib/common');
 
 router.get('/admin/users', restrict, async (req, res) => {
     const db = req.app.db;
@@ -73,7 +76,11 @@ router.get('/admin/user/edit/:id', restrict, async (req, res) => {
 });
 
 // users new
-router.get('/admin/user/new', restrict, (req, res) => {
+router.get('/admin/user/new', restrict, async (req, res) => {
+    const db = req.app.db;
+
+    const storesdb = await db.stores.find().toArray();
+
     res.render('user-new', {
         title: 'User - New',
         admin: true,
@@ -81,7 +88,8 @@ router.get('/admin/user/new', restrict, (req, res) => {
         helpers: req.handlebars.helpers,
         message: common.clearSessionValue(req.session, 'message'),
         messageType: common.clearSessionValue(req.session, 'messageType'),
-        config: req.app.config
+        config: req.app.config,
+        stores: storesdb
     });
 });
 
@@ -212,7 +220,8 @@ router.post('/admin/user/insert', restrict, async (req, res) => {
         usersName: req.body.usersName,
         userEmail: req.body.userEmail,
         userPassword: bcrypt.hashSync(req.body.userPassword, 10),
-        isAdmin: isAdmin
+        isAdmin: isAdmin,
+        userStore:getId(req.body.userStore)
     };
 
     // Validate new user

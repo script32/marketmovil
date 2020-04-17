@@ -24,6 +24,16 @@
 				<label>{{ @root.__ "Password confirm" }} *</label>
 				<input type="password" data-match="#userPassword"  class="form-control" required>
 			</div>
+			<div class="col-12">
+            	<div class="form-group" id="editor-wrapper">
+                	<label for="editor" class="control-label">{{ @root.__ "Store" }} *</label>
+                	<select class="form-control" id="store">
+                    	{{#each stores}}
+                        	<option value={{this._id}}>{{this.storeTitle}}</option>                    
+                    	{{/each}}
+                	</select>
+            	</div>
+        	</div>
 		</form>
 	</div>
 </main>

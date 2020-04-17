@@ -16,6 +16,16 @@
                     <input type="text" id="productTitle" class="form-control" minlength="5" maxlength="200" value="{{result.productTitle}}" required/>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="form-group" id="editor-wrapper">
+                    <label for="editor" class="control-label">{{ @root.__ "Store" }} *</label>
+                    <select class="form-control" id="productStore">
+                        {{#each stores}}
+                            <option value={{this._id}}>{{this.storeTitle}}</option>                    
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="productPrice" class="control-label">{{ @root.__ "Product price" }} *</label>

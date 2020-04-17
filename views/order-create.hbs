@@ -62,21 +62,31 @@
                             <input type="text" class="form-control" name="orderAddress2" id="orderAddress2" value="{{session.customerAddress2}}" placeholder="Address line 2">
                         </div>
                     </div>
-                    <div class="col-12">
+                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="control-label">{{ @root.__ "Country" }} *</label>
+                        <label class="control-label">{{ @root.__ "Country" }} *</label>
                             <select class="form-control" id="orderCountry" name="orderCountry" required>
-                                <option value="" disabled selected>Select Country</option>
-                                {{#each countryList}}
-                                <option {{selectState this @root.session.customerCountry}} value="{{this}}">{{this}}</option>
-                                {{/each}}
+                                <option value="" disabled selected>Seleccione Pais</option>
+                                <option value="Chile">Chile</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="control-label">{{ @root.__ "State" }} *</label>
-                            <input type="text" class="form-control" name="orderState" id="orderState" value="{{session.customerState}}" placeholder="State" required>
+                        <label class="control-label">{{ @root.__ "State" }} *</label>
+                            <select class="form-control" id="orderState" name="orderState" required>
+                                <option value="" disabled selected>Seleccione Region</option>
+                                <option value="Los Lagos">Los Lagos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                        <label class="control-label">{{ @root.__ "City" }} *</label>
+                            <select class="form-control" id="orderCity" name="orderCity" required>
+                                <option value="" disabled selected>Seleccione Ciudad</option>
+                                <option value="Osorno">Osorno</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-6">

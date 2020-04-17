@@ -45,22 +45,26 @@
             <label class="control-label">{{ @root.__ "Country" }} *</label>
                 <select class="form-control" id="country" name="country" required>
                     <option value="" disabled selected>Seleccione Pais</option>
-                    {{#each countryList}}
-                    <option {{selectState this @root.result.country}} value="{{this}}">{{this}}</option>
-                    {{/each}}
+                    <option value="Chile">Chile</option>
                 </select>
             </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-12">
             <div class="form-group">
             <label class="control-label">{{ @root.__ "State" }} *</label>
-                <input type="text" class="form-control" name="state" id="state" value={{result.state}} required>
+                <select class="form-control" id="state" name="state" required>
+                    <option value="" disabled selected>Seleccione Ciudad</option>
+                    <option value="Los Lagos">Los Lagos</option>
+                </select>
             </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-12">
             <div class="form-group">
-            <label class="control-label">{{ @root.__ "Postcode" }} *</label>
-                <input type="text" class="form-control" name="postcode" id="postcode" value={{result.postcode}} required>
+            <label class="control-label">{{ @root.__ "City" }} *</label>
+                <select class="form-control" id="city" name="city" required>
+                    <option value="" disabled selected>Seleccione Ciudad</option>
+                    <option value="Osorno">Osorno</option>
+                </select>
             </div>
         </div>
         <div class="col-sm-5">

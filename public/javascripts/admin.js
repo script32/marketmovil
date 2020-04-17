@@ -161,7 +161,8 @@ $(document).ready(function (){
                 data: {
                     usersName: $('#usersName').val(),
                     userEmail: $('#userEmail').val(),
-                    userPassword: $('#userPassword').val()
+                    userPassword: $('#userPassword').val(),
+                    userStore: $('#store').val()
                 }
             })
             .done(function(msg){
@@ -237,7 +238,8 @@ $(document).ready(function (){
                     productOptions: $('#productOptions').val(),
                     productSubscription: $('#productSubscription').val(),
                     productComment: $('#productComment').is(':checked'),
-                    productTags: $('#productTags').val()
+                    productTags: $('#productTags').val(),
+                    productStore: $('#productStore').val(),
                 }
             })
             .done(function(msg){
@@ -276,7 +278,8 @@ $(document).ready(function (){
                     productOptions: $('#productOptions').val(),
                     productSubscription: $('#productSubscription').val(),
                     productComment: $('#productComment').is(':checked'),
-                    productTags: $('#productTags').val()
+                    productTags: $('#productTags').val(),
+                    productStore: $('#productStore').val(),
                 }
             })
             .done(function(msg){

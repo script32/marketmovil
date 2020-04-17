@@ -8,6 +8,9 @@ const rimraf = require('rimraf');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
+const {
+    getId
+} = require('../lib/common');
 
 router.get('/admin/products/:page?', restrict, async (req, res, next) => {
     let pageNum = 1;
@@ -30,8 +33,7 @@ router.get('/admin/products/:page?', restrict, async (req, res, next) => {
         config: req.app.config,
         message: common.clearSessionValue(req.session, 'message'),
         messageType: common.clearSessionValue(req.session, 'messageType'),
-        helpers: req.handlebars.helpers,
-        testin: 'test'
+        helpers: req.handlebars.helpers
     });
 });
 
@@ -63,13 +65,16 @@ router.get('/admin/products/filter/:search', restrict, async (req, res, next) =>
         searchTerm: searchTerm,
         message: common.clearSessionValue(req.session, 'message'),
         messageType: common.clearSessionValue(req.session, 'messageType'),
-        helpers: req.handlebars.helpers,
-        testin: 'test'
+        helpers: req.handlebars.helpers
     });
 });
 
 // insert form
-router.get('/admin/product/new', restrict, checkAccess, (req, res) => {
+router.get('/admin/product/new', restrict, checkAccess, async (req, res) => {
+    const db = req.app.db;
+
+    const storesdb = await db.stores.find().toArray();
+
     res.render('product-new', {
         title: 'Nuevo producto',
         session: req.session,
@@ -83,7 +88,7 @@ router.get('/admin/product/new', restrict, checkAccess, (req, res) => {
         admin: true,
         helpers: req.handlebars.helpers,
         config: req.app.config,
-        testin: 'test'
+        stores: storesdb
     });
 });
 
@@ -113,7 +118,7 @@ router.post('/admin/product/insert', restrict, checkAccess, async (req, res) => 
         productAddedDate: new Date(),
         productStock: common.safeParseInt(req.body.productStock) || null,
         productStockDisable: common.convertBool(req.body.productStockDisable),
-        testin: 'test'
+        productStore: getId(req.body.productStore)
     };
 
     // Validate the body again schema
@@ -127,7 +132,7 @@ router.post('/admin/product/insert', restrict, checkAccess, async (req, res) => 
     // Check permalink doesn't already exist
     const product = await db.products.countDocuments({ productPermalink: req.body.productPermalink });
     if(product > 0 && req.body.productPermalink !== ''){
-        res.status(400).json({ message: 'Permalink already exists. Pick a new one.' });
+        res.status(400).json({ message: 'Permalink ya existe. Elige uno nuevo.' });
         return;
     }
 
@@ -192,8 +197,7 @@ router.get('/admin/product/edit/:id', restrict, checkAccess, async (req, res) =>
         messageType: common.clearSessionValue(req.session, 'messageType'),
         config: req.app.config,
         editor: true,
-        helpers: req.handlebars.helpers,
-        testin: 'test'
+        helpers: req.handlebars.helpers
     });
 });
 
@@ -258,7 +262,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
         productOptions: productOptions || null,
         productStock: common.safeParseInt(req.body.productStock) || null,
         productStockDisable: common.convertBool(req.body.productStockDisable),
-        testin: 'test'
+        productStore: getId(req.body.store),
 
     };
 
