@@ -1,0 +1,89 @@
+{{> themes/Cloth/front-menu}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <form class="form-horizontal" id="newCustomerForm" data-toggle="validator">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-header">                  
+                <h2>Registro de Usuario</h2>
+            </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <input type="email" class="form-control customerDetails" id="email" name="email" minlength="5" placeholder="Email" value="{{@root.session.customerEmail}}" required>
+                    <div class="invalid-feedback">
+                        Por favor, introduce una dirección de correo electrónico válida
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+               <div class="form-group">
+                    <input type="password" class="form-control customerDetails" id="password" name="password" placeholder="Contraseña" required>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input type="text" class="form-control customerDetails" id="firstname" name="firstname" placeholder="Nombre" value="{{@root.session.customerFirstname}}" required>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input type="text" class="form-control customerDetails" id="lastname" name="lastname" placeholder="Apellido" value="{{@root.session.customerLastname}}" required>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <input type="text" class="form-control customerDetails" id="addr1" name="addr1" placeholder="Direccion 1" value="{{@root.session.customerAddress1}}" required>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <input type="text" class="form-control customerDetails" id="addr2" name="addr2" placeholder="Direccion 2 (opcional)" value="{{@root.session.customerAddress2}}">
+                </div>
+            </div>
+        <div class="col-sm-12">
+                                <div class="form-group">
+                                    <select class="form-control" id="country" name="country" required>
+                                        <option value="" disabled selected>Seleccione Pais</option>
+                                        <option value="Chile">Chile</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">                        
+                                    <select class="form-control" id="state" name="state" required>
+                                        <option value="" disabled selected>Seleccione Region</option>
+                                        <option value="Los Lagos">Los Lagos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <select class="form-control" id="city" name="city" required>
+                                        <option value="" disabled selected>Seleccione Ciudad</option>
+                                        <option value="Osorno">Osorno</option>
+                                    </select>
+                                </div>
+                            </div>    
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <input type="text" class="form-control customerDetails" id="postcode" name="postcode" placeholder="Codigo Postal" value="{{@root.session.customerPostcode}}">
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <input type="number" class="form-control customerDetails" id="phoneNumber" name="phoneNumber" placeholder="Numero de Telefono" value="{{@root.session.customerPhone}}" required>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <textarea class="form-control customerDetails" placeholder="Comentarios" id="comment" name="comment">{{@root.session.orderComment}}</textarea>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12"></div>
+              <div class="float-right">
+                        <button id="frm_new_customer" class="btn btn-outline-success" type="submit">Registrar</button>
+             </div>
+            </div>
+        </div>
+    </form>
+</main>

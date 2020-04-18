@@ -7,6 +7,7 @@ const router = express.Router();
 const {
     getId,
     paginateData,
+    getImageStore,
     clearSessionValue,
     getCountryList,
     mongoSanitize,
@@ -106,7 +107,10 @@ router.post('/admin/stores/insert', restrict, checkAccess, async (req, res) => {
         storeTitle: common.cleanHtml(req.body.storeTitle),
         storeAddress: req.body.storeAddress,
         storeDescription: common.cleanHtml(req.body.storeDescription),
-        storeAddedDate: new Date(),
+        storeCountry: req.body.storeCountry,
+        storeState: req.body.storeState,
+        storeCity: req.body.storeCity,
+        storeAddedDate: new Date()
      };
 
     // Validate the body again schema
@@ -139,7 +143,9 @@ router.post('/admin/stores/insert', restrict, checkAccess, async (req, res) => {
 // edit user
 router.get('/admin/stores/edit/:id', restrict, async (req, res) => {
     const db = req.app.db;
+    
     const store = await db.stores.findOne({ _id: common.getId(req.params.id) });
+    const images = await common.getImageStore(req.params.id, req, res);
 
     // Check user is found
     if(!store){
@@ -154,28 +160,123 @@ router.get('/admin/stores/edit/:id', restrict, async (req, res) => {
         return;
     }
 
-    if(user.userEmail !== req.session.user && req.session.isAdmin === false){
-        if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Access denied' });
-            return;
-        }
-
-        req.session.message = 'Access denied';
-        req.session.messageType = 'danger';
-        res.redirect('/admin/stores');
-        return;
-    }
-
     res.render('stores-edit', {
         title: 'Store edit',
-        user: user,
+        result: store,
+        image: images,
         admin: true,
         session: req.session,
         message: common.clearSessionValue(req.session, 'message'),
         messageType: common.clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
-        config: req.app.config
+        config: req.app.config,
+        editor: true
     });
 });
+
+// Update an existing product form action
+router.post('/admin/stores/update', restrict, checkAccess, async (req, res) => {
+    const db = req.app.db;
+
+    const store = await db.stores.findOne({ _id: common.getId(req.body.storeId) });
+
+    if(!store){
+        res.status(400).json({ message: 'No se pudo actualizar la Tienda' });
+        return;
+    }
+    
+    const images = await common.getImageStore(req.body.storeId, req, res);
+    // Process supplied options
+       
+    const storeDoc = {
+        storeId: req.body.storeId,
+        storeTitle: common.cleanHtml(req.body.productTitle),
+        storeAddress: req.body.productPrice,
+        storeDescription: common.cleanHtml(req.body.productDescription),
+        storeCountry: req.body.storeCountry,
+        storeState: req.body.storeState,
+        storeCity: req.body.storeCity
+    };
+
+    // Validate the body again schema
+    const schemaValidate = validateJson('editStore', storeDoc);
+    if(!schemaValidate.result){
+        res.status(400).json(schemaValidate.errors);
+        return;
+    }
+
+    // Remove productId from doc
+    delete storeDoc.storeId;
+
+    // if no featured image
+    if(!store.storeImage){
+        if(images.length > 0){
+            storeDoc.storeImage = images[0].path;
+        }else{
+            storeDoc.storeImage = '/uploads/placeholder.png';
+        }
+    }else{
+        storeDoc.storeImage = store.storeImage;
+    }
+
+    try{
+        await db.stores.updateOne({ _id: common.getId(req.body.storeId) }, { $set: storeDoc }, {});
+        // Update the index
+        indexStores(req.app)
+        .then(() => {
+            res.status(200).json({ message: 'Se Guardo Satifactoriamente', store: storeDoc });
+        });
+    }catch(ex){
+        res.status(400).json({ message: 'Error al guardar. Inténtalo de nuevo' });
+    }
+});
+
+// set as main product image
+router.post('/admin/stores/setasmainimage', restrict, checkAccess, async (req, res) => {
+    const db = req.app.db;
+
+    try{
+        // update the productImage to the db
+        await db.stores.updateOne({ _id: common.getId(req.body.store_id) }, { $set: { storeImage: req.body.storeImage } }, { multi: false });
+        res.status(200).json({ message: 'Imagen principal configurada correctamente'});
+    }catch(ex){
+        res.status(400).json({ message: 'No se puede establecer como imagen principal. Inténtalo de nuevo.'});
+    }
+});
+
+// deletes a product image
+router.post('/admin/stores/deleteimage', restrict, checkAccess, async (req, res) => {
+    const db = req.app.db;
+
+    // get the productImage from the db
+    const store = await db.stores.findOne({ _id: common.getId(req.body.store_id) });
+    if(!store){
+        res.status(400).json({ message: 'Tienda no encontrada' });
+        return;
+    }
+    if(req.body.storeImage === store.storeImage){
+        // set the productImage to null
+        await db.stores.updateOne({ _id: common.getId(req.body.store_id) }, { $set: { storeImage: null } }, { multi: false });
+
+        // remove the image from disk
+        fs.unlink(path.join('public/stores', req.body.storeImage), (err) => {
+            if(err){
+                res.status(400).json({ message: 'Imagen no eliminada, intente nuevamente.' });
+            }else{
+                res.status(200).json({ message: 'Imagen eliminada con éxito' });
+            }
+        });
+    }else{
+        // remove the image from disk
+        fs.unlink(path.join('public/stores', req.body.storeImage), (err) => {
+            if(err){
+                res.status(400).json({ message: 'Imagen no eliminada, intente nuevamente.' });
+            }else{
+                res.status(200).json({ message: 'Imagen eliminada con éxito' });
+            }
+        });
+    }
+});
+
 
 module.exports = router;

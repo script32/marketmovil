@@ -455,6 +455,7 @@ initDb(config.databaseConnectionString, async (err, db) => {
     app.config = config;
     app.port = app.get('port');
 
+
     // Fire up the cron job to clear temp held stock
     cron.schedule('*/1 * * * *', async () => {
         const validSessions = await db.sessions.find({}).toArray();
@@ -478,13 +479,13 @@ initDb(config.databaseConnectionString, async (err, db) => {
     await addSchemas();
 
     // We index when not in test env
-   // if(process.env.NODE_ENV !== 'test'){
-   //     try{
-   //         await runIndexing(app);
-   //     }catch(ex){
-   //         console.error(colors.red('Error setting up indexes:' + ex.message));
-    //    }
-   // }
+   if(process.env.NODE_ENV !== 'test'){
+        try{
+            await runIndexing(app);
+        }catch(ex){
+            console.error(colors.red('Error setting up indexes:' + ex.message));
+       }
+    }
 
     // Start the app
     try{

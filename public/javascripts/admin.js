@@ -135,7 +135,10 @@ $(document).ready(function (){
                 data: {
                     storeTitle: $('#storeTitle').val(),
                     storeAddress: $('#storeAddress').val(),
-                    storeDescription: $('#storeDescription').val()
+                    storeDescription: $('#storeDescription').val(),
+                    storeCountry: $('#storeCountry').val(),
+                    storeState: $('#storeState').val(),
+                    storeCity: $('#storeCity').val()
                 }
             })
             .done(function(msg){
@@ -775,6 +778,28 @@ $(document).ready(function (){
         $.ajax({
             method: 'POST',
             url: '/admin/file/upload',
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: formData
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', true);
+        })
+        .fail(function(msg){
+            showNotification(msg.responseJSON.message, 'danger');
+        });
+    });
+
+    $(document).on('click', '#uploadButtonStore', function(e){
+        e.preventDefault();
+        var formData = new FormData($('#uploadForm')[0]);
+        formData.append('storeId', $('#storeId').val());
+
+        // Upload file
+        $.ajax({
+            method: 'POST',
+            url: '/admin/file/upload/stores',
             processData: false,
             contentType: false,
             cache: false,

@@ -677,6 +677,69 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
     res.status(400).json({ message: 'Error al cargar el archivo. Inténtalo de nuevo.' });
 });
 
+// upload the file
+const uploadStores = multer({ dest: 'public/uploads/stores/' });
+router.post('/admin/file/upload/stores', restrict, checkAccess, uploadStores.single('uploadFile'), async (req, res) => {
+    const db = req.app.db;
+
+    if(req.file){
+        const file = req.file;
+
+        // Get the mime type of the file
+        const mimeType = mime.lookup(file.originalname);
+
+        // Check for allowed mime type and file size
+        if(!common.allowedMimeType.includes(mimeType) || file.size > common.fileSizeLimit){
+            // Remove temp file
+            fs.unlinkSync(file.path);
+
+            // Return error
+            res.status(400).json({ message: 'Tipo de archivo no permitido o demasiado grande. Inténtalo de nuevo.' });
+            return;
+        }
+        console.log(req.body.storeId);
+
+        // get the product form the DB
+        const store = await db.stores.findOne({ _id: common.getId(req.body.storeId) });
+        if(!store){
+            // delete the temp file.
+            fs.unlinkSync(file.path);
+
+            // Return error
+            res.status(400).json({ message: 'Error al cargar el archivo. Inténtalo de nuevo.' });
+            return;
+        }
+
+        const storePath = store._id.toString();
+        const uploadDir = path.join('public/uploads/stores', storePath);
+
+        // Check directory and create (if needed)
+        common.checkDirectorySync(uploadDir);
+
+        const source = fs.createReadStream(file.path);
+        const dest = fs.createWriteStream(path.join(uploadDir, file.originalname.replace(/ /g, '_')));
+
+        // save the new file
+        source.pipe(dest);
+        source.on('end', () => { });
+
+        // delete the temp file.
+        fs.unlinkSync(file.path);
+
+        const imagePath = path.join('/uploads/stores', storePath, file.originalname.replace(/ /g, '_'));
+
+        // if there isn't a product featured image, set this one
+        if(!store.storeImage){
+            await db.stores.updateOne({ _id: common.getId(req.body.storeId) }, { $set: { storeImage: imagePath } }, { multi: false });
+        }
+        // Return success message
+        res.status(200).json({ message: 'documento cargado exitosamente' });
+        return;
+    }
+    // Return error
+    res.status(400).json({ message: 'Error al cargar el archivo. Inténtalo de nuevo.' });
+});
+
 // delete a file via ajax request
 router.post('/admin/testEmail', restrict, (req, res) => {
     const config = req.app.config;

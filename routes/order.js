@@ -136,7 +136,6 @@ router.post('/admin/order/create', async (req, res, next) => {
         orderProductCount: req.session.totalCartProducts,
         orderCustomer: getId(req.session.customerId),
         orderEmail: req.body.email || req.session.customerEmail,
-        orderCompany: req.body.company || req.session.customerCompany,
         orderFirstname: req.body.firstName || req.session.customerFirstname,
         orderLastname: req.body.lastName || req.session.customerLastname,
         orderAddr1: req.body.address1 || req.session.customerAddress1,
@@ -210,7 +209,7 @@ router.get('/admin/orders/filter/:search', restrict, async (req, res, next) => {
 
     const lunrIdArray = [];
     ordersIndex.search(searchTerm).forEach((id) => {
-        lunrIdArray.push(getId(id.ref));
+       lunrIdArray.push(getId(id.ref));
     });
 
     // we search on the lunr indexes

@@ -8,6 +8,9 @@
 			{{#each stores}}
 				<li class="list-group-item">
 					<strong>{{ @root.__ "Stores" }}:</strong> {{this.storeTitle}}
+				    {{#isAnAdmin @root.session.isAdmin}}
+							<a href="/admin/stores/edit/{{../this._id}}">{{{feather 'edit'}}}</a>
+					{{/isAnAdmin}}
 				</li>
 			{{/each}}
 		</ul>

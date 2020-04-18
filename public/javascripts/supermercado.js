@@ -162,7 +162,6 @@ $(document).ready(function (){
                 url: route,
                 data: {
                     email: $('#shipEmail').val(),
-                    company: $('#shipCompany').val(),
                     firstName: $('#shipFirstname').val(),
                     lastName: $('#shipLastname').val(),
                     address1: $('#shipAddr1').val(),
@@ -385,8 +384,9 @@ $(document).ready(function (){
             }
         })
 		.done(function(msg){
-            showNotification(msg.message, 'success');
             updateCartDiv();
+            showNotification(msg.message, 'success');
+            
         })
         .fail(function(msg){
             showNotification(msg.responseJSON.message, 'danger');
@@ -424,8 +424,9 @@ $(document).ready(function (){
                 data: { productId: $(this).attr('data-id') }
             })
             .done(function(msg){
-                showNotification(msg.message, 'success');
                 updateCartDiv();
+                showNotification(msg.message, 'success');
+                
             })
             .fail(function(msg){
                 showNotification(msg.responseJSON.message, 'danger');
@@ -558,8 +559,9 @@ function deleteFromCart(element){
         }
     })
     .done(function(msg){
-        showNotification(msg.message, 'success');
         updateCartDiv();
+        showNotification(msg.message, 'success');
+        
     })
     .fail(function(msg){
         showNotification(msg.responseJSON.message, 'danger');
@@ -773,6 +775,36 @@ function updateCartDiv(){
     });
 }
 
+$('#newCustomerForm').validator().on('submit', function(e){
+    if(!e.isDefaultPrevented()){
+        e.preventDefault();
+        
+        $.ajax({
+            method: 'POST',
+            url: '/customer/create',
+            data: {
+                email: $('#email').val(),
+                firstName: $('#firstname').val(),
+                lastName: $('#lastname').val(),
+                address1: $('#addr1').val(),
+                address2: $('#addr2').val(),
+                country: $('#country').val(),
+                state: $('#state').val(),
+                city: $('#city').val(),
+                postcode: $('#postcode').val(),
+                phone: $('#phoneNumber').val(),
+                password: $('#password').val(),
+            }
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', false, '/');
+        })
+        .fail(function(msg){
+            showNotification(msg.responseJSON.message, 'danger');
+        });
+    }
+});
+
 function upperFirst(value){
     return value.replace(/^\w/, (chr) => {
         return chr.toUpperCase();
@@ -786,7 +818,8 @@ function emptyCart(){
         url: '/product/emptycart'
     })
     .done(function(msg){
-        showNotification(msg.message, 'success', true);
         updateCartDiv();
+        showNotification(msg.message, 'success', true);
+       
     });
 }

@@ -813,6 +813,19 @@ router.get('/sitemap.xml', (req, res, next) => {
     });
 });
 
+router.get('/customer/new', async (req, res) => {
+    const config = req.app.config;
+    res.render(`${config.themeViews}new-customer`, {
+        title: 'Registro',
+        session: req.session,
+        editor: true,
+        helpers: req.handlebars.helpers,
+        config: req.app.config
+    });
+});
+
+
+
 router.get('/page/:pageNum', (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;

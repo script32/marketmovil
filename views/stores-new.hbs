@@ -20,6 +20,27 @@
 				<label>{{ @root.__ "Store Description" }} *</label>
 				<input type="text" class="form-control" id="storeDescription" value="{{store.storeDescription}}" required>
 			</div>
-		</form>
+			<div class="form-group">
+            <label class="control-label">{{ @root.__ "Country" }} *</label>
+                <select class="form-control" id="storeCountry" name="storeCountry" required>
+                    <option value="" disabled selected>Seleccione Pais</option>
+                    <option value="Chile">Chile</option>
+                </select>
+            </div>
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "State" }} *</label>
+                <select class="form-control" id="storeState" name="storeState" required>
+                    <option value="" disabled selected>Seleccione Region</option>
+                    <option value="Los Lagos">Los Lagos</option>
+                </select>
+            </div>
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "City" }} *</label>
+                <select class="form-control" id="storeCity" name="storeCity" required>
+                    <option value="" disabled selected>Seleccione Ciudad</option>
+                    <option value="Osorno">Osorno</option>
+                </select>
+            </div>
+        </form>
 	</div>
 </main>

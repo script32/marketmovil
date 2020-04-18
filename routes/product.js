@@ -19,7 +19,9 @@ router.get('/admin/products/:page?', restrict, async (req, res, next) => {
     }
 
     // Get our paginated data
-    const products = await common.paginateData(false, req, pageNum, 'products', {}, { productAddedDate: -1 });
+    const products = await common.paginateDataProduct(false, req, pageNum, 'products', {}, { productAddedDate: -1 });
+
+    
 
     res.render('products', {
         title: 'Cart',
@@ -161,6 +163,8 @@ router.get('/admin/product/edit/:id', restrict, checkAccess, async (req, res) =>
 
     const images = await common.getImages(req.params.id, req, res);
     const product = await db.products.findOne({ _id: common.getId(req.params.id) });
+    const storesdb = await db.stores.find().toArray();
+
     if(!product){
         // If API request, return json
         if(req.apiAuthenticated){
@@ -197,7 +201,8 @@ router.get('/admin/product/edit/:id', restrict, checkAccess, async (req, res) =>
         messageType: common.clearSessionValue(req.session, 'messageType'),
         config: req.app.config,
         editor: true,
-        helpers: req.handlebars.helpers
+        helpers: req.handlebars.helpers,
+        stores: storesdb
     });
 });
 
@@ -262,7 +267,7 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
         productOptions: productOptions || null,
         productStock: common.safeParseInt(req.body.productStock) || null,
         productStockDisable: common.convertBool(req.body.productStockDisable),
-        productStore: getId(req.body.store),
+        productStore: getId(req.body.productStore),
 
     };
 

@@ -219,5 +219,7 @@
 	"Store Address": "Direccion de Tienda",
 	"Store Description": "Descripcion de Tienda",
 	"City": "City",
-	"Store": "Store"
+	"Store": "Store",
+	"Store edit": "Store edit",
+	"Store image upload": "Store image upload"
 }

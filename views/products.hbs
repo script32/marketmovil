@@ -27,7 +27,8 @@
                 <li class="list-group-item">
                     <button class="float-right btn text-danger btn-delete-product" data-id="{{this._id}}"> {{{feather 'trash-2'}}}</button>
                     <h4 class="float-right"><input id="{{this._id}}" class="publishedState" type="checkbox" {{checkedState this.productPublished}}></h4>
-                    <div class="top-pad-8"><a href="/admin/product/edit/{{this._id}}">{{this.productTitle}}</a></div>
+                    <div class="top-pad-8"><a href="/admin/product/edit/{{this._id}}">Nombre: {{this.productTitle}} - Tienda: {{this.searchStore.storeTitle}}</a></div>
+
                 </li>
             {{/each}}
         </ul>

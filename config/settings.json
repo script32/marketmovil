@@ -14,7 +14,7 @@
     "productsPerRow": 3,
     "productsPerPage": 6,
     "menuTitle": "Menu",
-    "footerHtml": "&lt;h2 class=&quot;text-center&quot;&gt;Powered by MarketMovil&lt;/h2&gt;",
+    "footerHtml": "&lt;h6 class=&quot;text-center&quot;&gt;Powered by MarketMovil&lt;/h6&gt;",
     "googleAnalytics": "",
     "injectJs": "",
     "customCss": "",
