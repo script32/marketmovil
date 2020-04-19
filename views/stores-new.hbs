@@ -13,6 +13,14 @@
 				<input type="text" class="form-control" id="storeTitle" value="{{store.storeTitle}}" required>
 			</div>
 			<div class="form-group">
+				<label>{{ @root.__ "User email" }} *</label>
+				<input type="email" class="form-control" id="storeEmail" value="{{store.storeEmail}}" required>
+			</div>
+			<div class="form-group">
+				<label>{{ @root.__ "Contact Name" }} *</label>
+				<input type="text" class="form-control" id="storeNameContact" value="{{store.storeNameContact}}" required>
+			</div>
+			<div class="form-group">
 				<label>{{ @root.__ "Store Address" }} *</label>
 				<input type="text" class="form-control" id="storeAddress" value="{{store.storeAddress}}" required>
 			</div>
@@ -39,6 +47,19 @@
                 <select class="form-control" id="storeCity" name="storeCity" required>
                     <option value="" disabled selected>Seleccione Ciudad</option>
                     <option value="Osorno">Osorno</option>
+                </select>
+            </div>
+			<div class="form-group">
+            <label class="control-label">{{ @root.__ "Type" }} *</label>
+                <select class="form-control" id="storeType" name="storeType" required>
+                    <option value="" disabled selected>Tipo de Tienda</option>
+                    <option value="Gas">Gas</option>
+					<option value="Ferretería">Ferretería</option>
+					<option value="Panadería">Panadería</option>
+					<option value="Almacén">Almacén</option>
+					<option value="Congelados">Congelados</option>
+					<option value="Frutería">Frutería</option>
+					<option value="Otros">Otros</option>
                 </select>
             </div>
         </form>

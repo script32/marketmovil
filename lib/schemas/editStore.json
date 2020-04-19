@@ -1,19 +1,31 @@
 {
-    "$id": "newStores",
+    "$id": "editStore",
     "type": "object",
     "properties": {
         "storeTitle": {
             "type": "string",
             "isNotEmpty": true
         },
+        "storeNameContact":{
+            "type":"string",
+            "isNotEmpty":true
+        },
         "storeAddress": {
             "type": "string",
             "isNotEmpty": true
         },
+        "storeEmail": {
+            "type":"string",
+            "isNotEmpty":true
+        },
         "storeDescription": {
             "type": "string",
             "isNotEmpty": true
-        }        
+        },
+        "storyType":{
+            "type":"string",
+            "isNotEmpty": true
+        }       
     },
     "required": [
         "storeTitle",

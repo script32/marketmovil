@@ -16,7 +16,7 @@
                         <div class="col-8 col-md-9">
                             <div class="row">
                                 <div class="col-12 no-pad-left mt-md-4">
-                                    <h6><a href="/product/{{this.link}}">{{this.title}}</a></h6>
+                                    <h6><a href="/product/{{this.link}}">{{this.title}} - Tienda: {{this.store}}</a></h6>
                                     {{#each this.options}} 
                                         {{#if @last}}
                                             <strong>{{#upperFirst this.name}}{{/upperFirst}}</strong>: {{this.value}}
@@ -86,7 +86,7 @@
             {{else}}
             <div id="cart-empty" class="d-flex flex-row">
                 <div class="cart-contents-shipping col-md-12 no-pad-left">
-                    Cart empty
+                    Limpiar Carro
                 </div>
             </div>
             {{/if}}

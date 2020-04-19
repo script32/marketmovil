@@ -1,18 +1,27 @@
 {{> partials/menu}}
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-	<div class="col-md-12">
-		<div class="page-header">
-			<div class="float-right">
-				<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">{{ @root.__ "Upload image" }}</button>
-				<button type="submit" id="btnStoreEdit" class="btn btn-outline-success">{{ @root.__ "Update" }}</button>
-			</div>
-			<h2>{{ @root.__ "Store edit" }}</h2>
-		</div>
-		<form id="storeEditForm" data-toggle="validator">
-			<input type="hidden" id="storeId" value="{{result._id}}" />
+    <form id="storeEditForm" data-toggle="validator">
+        <input type="hidden" id="storeId" value="{{result._id}}" />
+            <div class="col-md-12">
+                <div class="page-header">
+                    <div class="float-right">
+                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">{{ @root.__ "Upload image" }}</button>
+                        <button type="submit" id="btnStoreEdit" class="btn btn-outline-success">{{ @root.__ "Update" }}</button>
+                    </div>
+                    <h2>{{ @root.__ "Store edit" }}</h2>
+                </div>
+            </div>
 			<div class="form-group">
 				<label>{{ @root.__ "Store Title" }} *</label>
 				<input type="text" class="form-control" id="storeTitle" value="{{result.storeTitle}}" required>
+			</div>
+            <div class="form-group">
+				<label>{{ @root.__ "User email" }} *</label>
+				<input type="email" class="form-control" id="storeEmail" value="{{result.storeEmail}}" required>
+			</div>
+            <div class="form-group">
+				<label>{{ @root.__ "Contact Name" }} *</label>
+				<input type="text" class="form-control" id="storeNameContact" value="{{result.storeNameContact}}" required>
 			</div>
 			<div class="form-group">
 				<label>{{ @root.__ "Store Address" }} *</label>
@@ -25,28 +34,36 @@
 			<div class="form-group">
             <label class="control-label">{{ @root.__ "Country" }} *</label>
                 <select class="form-control" id="storeCountry" name="storeCountry" required>
-                    <option value="" disabled selected>Seleccione Pais</option>
                     <option value="Chile">Chile</option>
                 </select>
             </div>
             <div class="form-group">
             <label class="control-label">{{ @root.__ "State" }} *</label>
                 <select class="form-control" id="storeState" name="storeState" required>
-                    <option value="" disabled selected>Seleccione Region</option>
                     <option value="Los Lagos">Los Lagos</option>
                 </select>
             </div>
             <div class="form-group">
             <label class="control-label">{{ @root.__ "City" }} *</label>
                 <select class="form-control" id="storeCity" name="storeCity" required>
-                    <option value="" disabled selected>Seleccione Ciudad</option>
-                    <option value="Osorno">Osorno</option>
+                    <option value="Osorno" >Osorno</option>
+                </select>
+            </div>
+            	<div class="form-group">
+            <label class="control-label">{{ @root.__ "Type" }} *</label>
+                <select class="form-control" id="storeType" name="storeType" required>          
+                    <option value="Gas" {{selectState result.storeType "Gas"}}>Gas</option>
+					<option value="Ferretería" {{selectState result.storeType "Ferretería"}}>Ferretería</option>
+					<option value="Panadería" {{selectState result.storeType "Panadería"}}>Panadería</option>
+					<option value="Almacén" {{selectState result.storeType "Almacén"}}>Almacén</option>
+					<option value="Congelados" {{selectState result.storeType "Congelados"}}>Congelados</option>
+					<option value="Frutería" {{selectState result.storeType "Frutería"}}>Frutería</option>
+					<option value="Otros" {{selectState result.storeType "Otros"}}>Otros</option>            
                 </select>
             </div>
 		</form>
-	</div>
-	
 </main>
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

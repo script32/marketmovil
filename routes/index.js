@@ -346,6 +346,9 @@ router.get('/product/:id', async (req, res) => {
     const productsIndex = req.app.productsIndex;
 
     const product = await db.products.findOne({ $or: [{ _id: getId(req.params.id) }, { productPermalink: req.params.id }] });
+    
+    
+    
     if(!product){
         res.render('error', { title: 'Not found', message: 'Orden no encontrada', helpers: req.handlebars.helpers, config });
         return;
@@ -354,6 +357,8 @@ router.get('/product/:id', async (req, res) => {
         res.render('error', { title: 'Not found', message: 'Producto no encontrado', helpers: req.handlebars.helpers, config });
         return;
     }
+
+
     const productOptions = product.productOptions;
 
     // If JSON query param return json instead
@@ -406,7 +411,7 @@ router.get('/cart/retrieve', async (req, res, next) => {
     const db = req.app.db;
 
     // Get the cart from the DB using the session id
-    const cart = await db.cart.findOne({ sessionId: getId(req.session.id) });
+    const cart = await db.cart.findOne({ sessionId: getId(req.session.id) }).sort({ storeTitle: -1 });
 
     res.status(200).json({ cart: cart.cart });
 });
@@ -423,7 +428,17 @@ router.post('/product/updatecart', async (req, res, next) => {
         return;
     }
 
-    const product = await db.products.findOne({ _id: getId(cartItem.productId) });
+    //const product = await db.products.findOne({ _id: getId(cartItem.productId) });
+
+    const product = await db.products.aggregate([{$match: { _id: getId(cartItem.productId) }},
+        {$lookup: {
+            from: 'stores',
+            localField: 'productStore',
+            foreignField: '_id',
+            as: 'searchStore'
+          }},{$unwind:'$searchStore'}]).toArray();
+
+
     if(!product){
         res.status(400).json({ message: 'Se produjo un error al actualizar el carrito.', totalCartItems: Object.keys(req.session.cart).length });
         return;
@@ -450,7 +465,7 @@ router.post('/product/updatecart', async (req, res, next) => {
         }
     }
 
-    const productPrice = parseFloat(product.productPrice).toFixed(2);
+    const productPrice = parseFloat(product[0].productPrice).toFixed(2);
     if(!req.session.cart[cartItem.cartId]){
         res.status(400).json({ message: 'Se produjo un error al actualizar el carro', totalCartItems: Object.keys(req.session.cart).length });
         return;
@@ -470,6 +485,7 @@ router.post('/product/updatecart', async (req, res, next) => {
     await db.cart.updateOne({ sessionId: req.session.id }, {
         $set: { cart: req.session.cart }
     });
+
 
     res.status(200).json({ message: 'Carro actualizado con éxito', totalCartItems: Object.keys(req.session.cart).length });
 });
@@ -534,7 +550,12 @@ router.post('/product/addtocart', async (req, res, next) => {
     }
 
     // Get the product from the DB
-    const product = await db.products.findOne({ _id: getId(req.body.productId) });
+    //const product = await db.products.findOne();
+
+    const product = await db.products.findOne({_id: getId(req.body.productId)});
+
+    const store = await db.stores.findOne({_id: getId(product.productStore)});
+
     // No product found
     if(!product){
         return res.status(400).json({ message: 'Error al actualizar el carro. Inténtalo de nuevo.' });
@@ -633,6 +654,8 @@ router.post('/product/addtocart', async (req, res, next) => {
         productObj.productImage = product.productImage;
         productObj.productComment = productComment;
         productObj.productSubscription = product.productSubscription;
+        productObj.store = store.storeTitle;
+
         if(product.productPermalink){
             productObj.link = product.productPermalink;
         }else{

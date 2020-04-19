@@ -663,6 +663,13 @@ function updateCartDiv(){
                 </div>`;
         }
 
+        const ordered = {};
+        Object.keys(cart).sort().forEach(function(key) {
+            ordered[key] = cart[key];
+          });
+        
+        cart = ordered;
+        
         // If the cart has contents
         if(cart){
             $('#cart-empty').empty();
@@ -672,6 +679,7 @@ function updateCartDiv(){
                 var productTotalAmount = numeral(item.totalItemPrice).format('0.00');
                 var optionsHtml = '';
                 var optionIndex = 1;
+                
                 Object.keys(item.options).forEach(function(key){
                     var option = item.options[key];
                     if(optionIndex === Object.keys(item.options).length){
@@ -681,6 +689,7 @@ function updateCartDiv(){
                     }
                     optionIndex++;
                 });
+
                 var productImage = `<img class="img-fluid" src="/uploads/placeholder.png" alt="${item.title} product image"></img>`;
                 if(item.productImage){
                     productImage = `<img class="img-fluid" src="${item.productImage}" alt="${item.title} product image"></img>`;
@@ -697,7 +706,7 @@ function updateCartDiv(){
                             <div class="col-8 col-md-9">
                                 <div class="row">
                                     <div class="col-12 no-pad-left mt-md-4">
-                                        <h6><a href="/product/${item.link}">${item.title}</a></h6>
+                                        <h6><a href="/product/${item.link}">Producto: ${item.title} - Tienda: ${item.store}</a></h6>
                                         ${optionsHtml}
                                     </div>
                                     <div class="col-12 col-md-6 no-pad-left mb-2">
@@ -823,3 +832,14 @@ function emptyCart(){
        
     });
 }
+
+function sortByProperty(property){  
+    return function(a,b){  
+       if(a[property] > b[property])  
+          return 1;  
+       else if(a[property] < b[property])  
+          return -1;  
+   
+       return 0;  
+    }  
+ }

@@ -191,6 +191,7 @@ handlebars = handlebars.create({
             return '';
         },
         selectState: (state, value) => {
+            console.log(state,value);
             if(state === value){
                 return 'selected';
             }
@@ -317,6 +318,8 @@ handlebars = handlebars.create({
         }
     }
 });
+
+
 
 // session store
 const store = new MongoStore({

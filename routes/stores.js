@@ -106,10 +106,13 @@ router.post('/admin/stores/insert', restrict, checkAccess, async (req, res) => {
     const doc = {
         storeTitle: common.cleanHtml(req.body.storeTitle),
         storeAddress: req.body.storeAddress,
+        storeNameContact: req.body.storeNameContact,
+        storeEmail: req.body.storeEmail,
         storeDescription: common.cleanHtml(req.body.storeDescription),
         storeCountry: req.body.storeCountry,
         storeState: req.body.storeState,
         storeCity: req.body.storeCity,
+        storeType: req.body.storeType,
         storeAddedDate: new Date()
      };
 
@@ -190,12 +193,15 @@ router.post('/admin/stores/update', restrict, checkAccess, async (req, res) => {
        
     const storeDoc = {
         storeId: req.body.storeId,
-        storeTitle: common.cleanHtml(req.body.productTitle),
-        storeAddress: req.body.productPrice,
-        storeDescription: common.cleanHtml(req.body.productDescription),
+        storeTitle: common.cleanHtml(req.body.storeTitle),
+        storeEmail: req.body.storeEmail,
+        storeAddress: req.body.storeAddress,
+        storeNameContact: req.body.storeNameContact,
+        storeDescription: common.cleanHtml(req.body.storeDescription),
         storeCountry: req.body.storeCountry,
         storeState: req.body.storeState,
-        storeCity: req.body.storeCity
+        storeCity: req.body.storeCity,
+        storeType: req.body.storeType
     };
 
     // Validate the body again schema

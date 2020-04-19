@@ -589,18 +589,18 @@ router.post('/customer/reset/:token', async (req, res) => {
         await db.customers.updateOne({ email: customer.email }, { $set: { password: newPassword, resetToken: undefined, resetTokenExpiry: undefined } }, { multi: false });
         const mailOpts = {
             to: customer.email,
-            subject: 'Password successfully reset',
-            body: 'This is a confirmation that the password for your account ' + customer.email + ' has just been changed successfully.\n'
+            subject: 'Contraseña Actualizada',
+            body: 'Esta es una conformacion que la contraseña de la cuenta' + customer.email + ' ha sido actualizada.\n'
         };
 
         // TODO: Should fix this to properly handle result
         sendEmail(mailOpts.to, mailOpts.subject, mailOpts.body);
-        req.session.message = 'Password successfully updated';
+        req.session.message = 'Contraseña Actualizada';
         req.session.message_type = 'success';
         return res.redirect('/checkout/payment');
     }catch(ex){
-        console.log('Unable to reset password', ex);
-        req.session.message = 'Unable to reset password';
+        console.log('No se puede Modificar la contraseña', ex);
+        req.session.message = 'No se puede Modificar la contraseña';
         req.session.message_type = 'danger';
         return res.redirect('/forgot');
     }

@@ -20,7 +20,7 @@
                 <label for="editor" class="control-label">{{ @root.__ "Store" }} *</label>
                 <select class="form-control" id="productStore">
                     {{#each stores}}
-                        <option value={{stores._id}}>{{stores.storeTitle}}</option>                    
+                        <option value={{this._id}}>{{this.storeTitle}}</option>                    
                     {{/each}}
                 </select>
             </div>

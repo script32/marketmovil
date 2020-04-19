@@ -23,7 +23,7 @@
 			</div>
 			<div class="form-group">
 				<label>{{ @root.__ "Password confirm" }} {{#ifCond session.user '==' user.userEmail}}*{{/ifCond}}</label>
-				<input autocomplete="off" type="password" data-validation-match-match="userPassword" data-validation-match-message="Password values to not match" class="form-control" {{#ifCond session.user '==' user.userEmail}}required{{/ifCond}}>
+				<input autocomplete="off" type="password" data-validation-match-match="userPassword" data-validation-match-message="Las contraseñas no son iguales" class="form-control" {{#ifCond session.user '==' user.userEmail}}required{{/ifCond}}>
 			</div>
 			{{#isAnAdmin @root.session.isAdmin}}
 				{{#ifCond @root.session.user '!=' user.userEmail}}

@@ -135,16 +135,55 @@ $(document).ready(function (){
                 data: {
                     storeTitle: $('#storeTitle').val(),
                     storeAddress: $('#storeAddress').val(),
+                    storeEmail: $('#storeEmail').val(),
                     storeDescription: $('#storeDescription').val(),
                     storeCountry: $('#storeCountry').val(),
                     storeState: $('#storeState').val(),
-                    storeCity: $('#storeCity').val()
+                    storeCity: $('#storeCity').val(),
+                    storeType: $('#storeType').val(),
+                    storeNameContact: $('#storeNameContact').val(),
                 }
             })
             .done(function(msg){
                 showNotification(msg.message, 'success', false, '/admin/stores/edit/' + msg.storeId);
             })
             .fail(function(msg){
+                showNotification(msg.responseJSON.message, 'danger');
+            });
+        }
+    });
+
+    $('#storeEditForm').validator().on('submit', function(e){
+        if(!e.isDefaultPrevented()){
+            e.preventDefault();
+         
+            $.ajax({
+                method: 'POST',
+                url: '/admin/stores/update',
+                data: {
+                    storeId: $('#storeId').val(),
+                    storeTitle: $('#storeTitle').val(),
+                    storeAddress: $('#storeAddress').val(),
+                    storeEmail: $('#storeEmail').val(),
+                    storeDescription: $('#storeDescription').val(),
+                    storeCountry: $('#storeCountry').val(),
+                    storeState: $('#storeState').val(),
+                    storeCity: $('#storeCity').val(),
+                    storeType: $('#storeType').val(),
+                    storeNameContact: $('#storeNameContact').val(),
+                }
+            })
+            .done(function(msg){
+                showNotification(msg.message, 'success', true);
+            })
+            .fail(function(msg){
+                if(msg.responseJSON.length > 0){
+                    var errorMessages = validationErrors(msg.responseJSON);
+                    console.log('errorMessages', errorMessages);
+                    $('#validationModalBody').html(errorMessages);
+                    $('#validationModal').modal('show');
+                    return;
+                }
                 showNotification(msg.responseJSON.message, 'danger');
             });
         }
@@ -178,7 +217,7 @@ $(document).ready(function (){
     });
 
     $('.userDelete').on('click', function(){
-        if(confirm('Are you sure you want to delete?')){
+        if(confirm('¿Esta seguro que desea Eliminar?')){
             $.ajax({
                 method: 'POST',
                 url: '/admin/user/delete',
@@ -591,7 +630,7 @@ $(document).ready(function (){
 
     $(document).on('click', '#btnPageDelete', function(e){
         e.preventDefault();
-        if(confirm('Are you sure?')){
+        if(confirm('¿Esta Seguro?')){
             $.ajax({
                 method: 'POST',
                 url: '/admin/settings/page/delete',
@@ -671,7 +710,7 @@ $(document).ready(function (){
 
     $(document).on('click', '#btnDiscountDelete', function(e){
         e.preventDefault();
-        if(confirm('Are you sure?')){
+        if(confirm('¿Esta Seguro?')){
             $.ajax({
                 method: 'DELETE',
                 url: '/admin/settings/discount/delete',
@@ -730,7 +769,7 @@ $(document).ready(function (){
     $(document).on('click', '.settings-menu-delete', function(e){
         e.preventDefault();
 
-        if(confirm('Are you sure?')){
+        if(confirm('¿Esta Seguro?')){
             $.ajax({
                 method: 'POST',
                 url: '/admin/settings/menu/delete',

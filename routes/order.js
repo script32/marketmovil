@@ -189,7 +189,7 @@ router.post('/admin/order/create', async (req, res, next) => {
             // send the email with the response
             // TODO: Should fix this to properly handle result
             sendEmail(req.session.paymentEmailAddr, `Su orden con ${config.cartTitle}`, getEmailTemplate(paymentResults));
-
+            
             // redirect to outcome
             res.status(200).json({
                 message: 'Pedido creado con éxito',
