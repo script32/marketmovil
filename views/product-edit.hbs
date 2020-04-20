@@ -21,7 +21,7 @@
                     <label for="editor" class="control-label">{{ @root.__ "Store" }} *</label>
                     <select class="form-control" id="productStore">
                         {{#each stores}}
-                            <option value={{this._id}}>{{this.storeTitle}}</option>                    
+                            <option value={{this._id}} {{selectState this._id result.productStore}}>{{this.storeTitle}}</option>                    
                         {{/each}}
                     </select>
                 </div>
